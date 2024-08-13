@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { recruiterFormSchema } from "@/types/validation";
+import { recruiterOnboardFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
@@ -12,8 +12,8 @@ import { formFieldType } from "@/constants";
 
 const RecruiterOnboardForm = () => {
   // 1. Define your form.
-  const form = useForm<z.infer<typeof recruiterFormSchema>>({
-    resolver: zodResolver(recruiterFormSchema),
+  const form = useForm<z.infer<typeof recruiterOnboardFormSchema>>({
+    resolver: zodResolver(recruiterOnboardFormSchema),
     defaultValues: {
       name: "",
       companyName: "",
@@ -22,7 +22,7 @@ const RecruiterOnboardForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof recruiterFormSchema>) {
+  function onSubmit(values: z.infer<typeof recruiterOnboardFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);

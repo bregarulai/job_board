@@ -7,7 +7,9 @@ const CommonLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="mx-auto max-w-7xl p-6 lg:px-8 ">
       <Header userId={user?.id} />
-      <main className="h-[calc(100vh-7rem)] overflow-y-auto">{children}</main>
+      <main className="h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
+        {children}
+      </main>
     </div>
   );
 };
