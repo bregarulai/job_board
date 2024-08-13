@@ -1,9 +1,9 @@
-import CommonForm from "@/components/forms/CommonForm";
+import OnBoard from "@/components/OnBoard";
 
 const OnboardPage = () => {
   return (
     <div>
-      <CommonForm />
+      <OnBoard />
     </div>
   );
 };

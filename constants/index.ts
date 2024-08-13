@@ -5,6 +5,11 @@ export enum formFieldType {
   FILE = "file",
 }
 
+export enum tabsTriggerType {
+  CANDIDATE = "candidate",
+  RECRUITER = "recruiter",
+}
+
 export type CustomFormFieldProps = {
   fieldType: formFieldType;
   control: Control<any>;

@@ -6,20 +6,11 @@ import { z } from "zod";
 
 import { recruiterFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
 import { formFieldType } from "@/constants";
 
-const CommonForm = () => {
+const RecruiterOnboardForm = () => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof recruiterFormSchema>>({
     resolver: zodResolver(recruiterFormSchema),
@@ -56,4 +47,4 @@ const CommonForm = () => {
   );
 };
 
-export default CommonForm;
+export default RecruiterOnboardForm;
