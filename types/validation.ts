@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const recruiterOnboardFormSchema = z.object({
   name: z.string().trim().min(2, {
-    message: "name must be at least 2 characters.",
+    message: "Name must be at least 2 characters.",
   }),
   companyName: z.string().trim().min(2, {
     message: "Company name must be at least 2 characters.",
@@ -10,11 +10,13 @@ export const recruiterOnboardFormSchema = z.object({
   companyRole: z.string().trim().min(2, {
     message: "Comapany role must be at least 2 characters.",
   }),
+  isPremiumUser: z.boolean(),
 });
 export const candidateOnboardFormSchema = z.object({
-  resume: z.string().trim().min(2, {
-    message: "Resume must be pdf file.",
-  }),
+  resume: z
+    .string()
+    .trim()
+    .endsWith(".pdf", { message: "Resume must be pdf file." }),
   name: z.string().trim().min(2, {
     message: "Name must be at least 2 characters.",
   }),
@@ -57,4 +59,5 @@ export const candidateOnboardFormSchema = z.object({
   githubProfile: z.string().trim().min(2, {
     message: "Github Profile must be at least 2 characters.",
   }),
+  isPremiumUser: z.boolean(),
 });

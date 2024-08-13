@@ -18,6 +18,7 @@ const RecruiterOnboardForm = () => {
       name: "",
       companyName: "",
       companyRole: "",
+      isPremiumUser: false,
     },
   });
 

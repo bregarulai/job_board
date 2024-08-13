@@ -15,7 +15,7 @@ const CandidateOnboardForm = () => {
   const form = useForm<z.infer<typeof candidateOnboardFormSchema>>({
     resolver: zodResolver(candidateOnboardFormSchema),
     defaultValues: {
-      resume: "",
+      resume: undefined,
       name: "",
       currentCompany: "",
       currentJobLoacation: "",
@@ -30,6 +30,7 @@ const CandidateOnboardForm = () => {
       graduationYear: "",
       linkedinProfile: "",
       githubProfile: "",
+      isPremiumUser: false,
     },
   });
 
