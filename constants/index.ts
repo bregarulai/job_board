@@ -2,6 +2,7 @@ import { Control } from "react-hook-form";
 
 export enum formFieldType {
   INPUT = "input",
+  FILE = "file",
 }
 
 export type CustomFormFieldProps = {
