@@ -31,14 +31,14 @@ const Header = () => {
           <Button
             size="sm"
             variant="ghost"
-            className="cursor-pointer px-1 -ml-1"
+            className="cursor-pointer px-1 -ml-1 lg:hidden"
           >
             <AlignJustify />
             <span className="sr-only">Toggle Navigation Menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <Link href="/" className="mr-6 hidden lg:flex">
+          <Link href="/" className="mr-6 flex">
             <h3>BreagaCode Jobs</h3>
           </Link>
           <nav className="grid gap-2 py-6">
@@ -57,6 +57,22 @@ const Header = () => {
           </nav>
         </SheetContent>
       </Sheet>
+      <Link href="/" className="mr-6 hidden lg:flex">
+        <h3>BreagaCode Jobs</h3>
+      </Link>
+      <nav className="ml-auto hidden lg:flex gap-6">
+        {menuItems.map((menuItem) =>
+          menuItem.show ? (
+            <Link
+              key={menuItem.path}
+              href={menuItem.path}
+              className="group inline-flex h-9 w-max items-center rounded-md bg-white px-4 py-2 text-sm font-medium hover:underline"
+            >
+              {menuItem.label}
+            </Link>
+          ) : null
+        )}
+      </nav>
     </header>
   );
 };
