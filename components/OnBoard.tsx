@@ -29,7 +29,13 @@ const OnBoard = () => {
         </div>
         <TabsContent value={tabsTriggerType.CANDIDATE}>Candidate</TabsContent>
         <TabsContent value={tabsTriggerType.RECRUITER}>
-          <RecruiterOnboardForm />
+          <div className="flex flex-col gap-6 mt-6">
+            <h2 className="text-2xl font-semibold tracking-tight text-gray-600">
+              Recruiter Onboarding
+            </h2>
+
+            <RecruiterOnboardForm />
+          </div>
         </TabsContent>
       </Tabs>
     </div>

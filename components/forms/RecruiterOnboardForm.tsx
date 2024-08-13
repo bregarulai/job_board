@@ -15,7 +15,9 @@ const RecruiterOnboardForm = () => {
   const form = useForm<z.infer<typeof recruiterFormSchema>>({
     resolver: zodResolver(recruiterFormSchema),
     defaultValues: {
-      username: "",
+      name: "",
+      companyName: "",
+      companyRole: "",
     },
   });
 
@@ -31,17 +33,26 @@ const RecruiterOnboardForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <CustomFormField
           control={form.control}
-          name="username"
+          name="name"
           fieldType={formFieldType.INPUT}
-          label="Username"
-          placeholder="Username"
+          label="Name"
+          placeholder="Enter your name"
         />
         <CustomFormField
           control={form.control}
-          name="resume"
-          fieldType={formFieldType.FILE}
+          name="companyName"
+          fieldType={formFieldType.INPUT}
+          label="Company Name"
+          placeholder="Enter your company name"
         />
-        <Button type="submit">Submit</Button>
+        <CustomFormField
+          control={form.control}
+          name="companyRole"
+          fieldType={formFieldType.INPUT}
+          label="Company Role"
+          placeholder="Enter your company role"
+        />
+        <Button type="submit">Onboard as a Recruiter</Button>
       </form>
     </Form>
   );
