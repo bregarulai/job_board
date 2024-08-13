@@ -1,12 +1,19 @@
 "use client";
 
-import { AlignJustify } from "lucide-react";
+import { AlignJustify, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignOutButton,
+  UserButton,
+} from "@clerk/nextjs";
+import { HeaderProps } from "@/types";
 
-const Header = () => {
+const Header = ({ userId }: HeaderProps) => {
   const menuItems = [
     {
       label: "Home",
@@ -16,14 +23,35 @@ const Header = () => {
     {
       label: "Login",
       path: "/sign-in",
-      show: true,
+      show: !userId,
     },
     {
       label: "Register",
       path: "/sign-up",
-      show: true,
+      show: !userId,
+    },
+    {
+      label: "Jobs",
+      path: "/jobs",
+      show: userId,
+    },
+    {
+      label: "Activities",
+      path: "/activities",
+      show: userId,
+    },
+    {
+      label: "Membership",
+      path: "/membership",
+      show: userId,
+    },
+    {
+      label: "Account",
+      path: "/account",
+      show: userId,
     },
   ];
+
   return (
     <header className="flex h-16 w-full shrink-0 items-center">
       <Sheet>
@@ -54,6 +82,9 @@ const Header = () => {
                 </Link>
               ) : null
             )}
+            <div>
+              <SignOutButton />
+            </div>
           </nav>
         </SheetContent>
       </Sheet>
@@ -72,6 +103,12 @@ const Header = () => {
             </Link>
           ) : null
         )}
+        <ClerkLoaded>
+          <UserButton />
+        </ClerkLoaded>
+        <ClerkLoading>
+          <Loader2 className="size-8 text-slate-400 animate-spin" />
+        </ClerkLoading>
       </nav>
     </header>
   );
