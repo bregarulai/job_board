@@ -1,5 +1,11 @@
+import CommonForm from "@/components/forms/CommonForm";
+
 const OnboardPage = () => {
-  return <div>OnboardPage</div>;
+  return (
+    <div>
+      <CommonForm />
+    </div>
+  );
 };
 
 export default OnboardPage;
