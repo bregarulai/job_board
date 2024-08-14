@@ -37,7 +37,7 @@ const RenderField = ({
         <FormControl>
           <FormLabel
             htmlFor={field.name}
-            className="text-[14px] leading-[18px] font-medium flex items-center gap-3 mx-auto mt-6 text-center border-2 border-dashed bg-gray-100 border-gray-300 rounded-lg cursor-pointer"
+            className="capitalize text-[14px] leading-[18px] font-medium flex items-center gap-3 pl-3 mx-auto mt-6 text-center border-2 border-dashed bg-gray-100 border-gray-300 rounded-lg cursor-pointer"
           >
             <h2>{field.name}</h2>
             <Input
