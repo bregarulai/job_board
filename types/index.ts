@@ -35,3 +35,13 @@ export type CreateProfileParams = {
   profile: RecruiterSubmitData;
   pathToRevalidate: string;
 };
+
+export type JobSubmitData = {
+  jobTitle: string;
+  jobDescription: string;
+};
+
+export type PostNewJobParams = {
+  job: JobSubmitData;
+  pathToRevalidate: string;
+};
