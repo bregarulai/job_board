@@ -52,3 +52,16 @@ export type PostNewJobParams = {
   job: JobSubmitData;
   pathToRevalidate: string;
 };
+
+export type RecruiterJobType = {
+  _id: string;
+  applicants: string[];
+  companyName: string;
+  description: string;
+  experience: string;
+  location: string;
+  recruiterId: string | undefined;
+  skills: string;
+  title: string;
+  type: string;
+};

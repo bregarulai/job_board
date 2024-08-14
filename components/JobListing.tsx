@@ -3,6 +3,8 @@
 import { profileType } from "@/constants";
 import PostNewJob from "@/components/PostNewJob";
 import { useGetJobsForRecruiter } from "@/apiHooks/useGetJobsForRecruiter";
+import RecruiderJobCard from "@/components/RecruiderJobCard";
+import { RecruiterJobType } from "@/types";
 
 const JobListing = ({
   role,
@@ -25,7 +27,25 @@ const JobListing = ({
             {role === profileType.CANDIDATE ? <p>Filters</p> : <PostNewJob />}
           </div>
         </div>
-        <div>Job Listing</div>
+        <div className="pt-6 pb-24">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+            <div className="lg:col-span-4">
+              <div className="container mx-auto p-0 space-y-8">
+                <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+                  {jobs && jobs.length > 0
+                    ? jobs.map((job: RecruiterJobType) =>
+                        role === profileType.CANDIDATE ? (
+                          <p>Candidate Card</p>
+                        ) : (
+                          <RecruiderJobCard job={job} key={job?._id} />
+                        )
+                      )
+                    : null}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
