@@ -11,7 +11,6 @@ import CustomFormField from "@/components/CustomFormField";
 import { formFieldType } from "@/constants";
 
 const CandidateOnboardForm = () => {
-  // 1. Define your form.
   const form = useForm<z.infer<typeof candidateOnboardFormSchema>>({
     resolver: zodResolver(candidateOnboardFormSchema),
     defaultValues: {
@@ -30,14 +29,10 @@ const CandidateOnboardForm = () => {
       graduationYear: "",
       linkedinProfile: "",
       githubProfile: "",
-      isPremiumUser: false,
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof candidateOnboardFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 

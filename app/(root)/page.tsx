@@ -1,10 +1,11 @@
+import { fetchProfileAction } from "@/actions/profile.action";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 const HomePage = async () => {
   const user = await currentUser();
 
-  const profileInfo: any = null;
+  const profileInfo = await fetchProfileAction(user?.id);
 
   if (user && !profileInfo?._id) redirect("/onboard");
 

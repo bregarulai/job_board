@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomFormFieldProps, formFieldType } from "@/constants";
+import { formFieldType } from "@/constants";
 import {
   FormControl,
   FormField,
@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { CustomFormFieldProps } from "@/types";
 
 const RenderField = ({
   field,

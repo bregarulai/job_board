@@ -5,17 +5,7 @@ export enum formFieldType {
   FILE = "file",
 }
 
-export enum tabsTriggerType {
+export enum profileType {
   CANDIDATE = "candidate",
   RECRUITER = "recruiter",
 }
-
-export type CustomFormFieldProps = {
-  fieldType: formFieldType;
-  control: Control<any>;
-  name: string;
-  label?: string;
-  placeholder?: string;
-  disabled?: boolean;
-  children?: React.ReactNode;
-};

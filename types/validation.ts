@@ -10,7 +10,6 @@ export const recruiterOnboardFormSchema = z.object({
   companyRole: z.string().trim().min(2, {
     message: "Comapany role must be at least 2 characters.",
   }),
-  isPremiumUser: z.boolean(),
 });
 export const candidateOnboardFormSchema = z.object({
   resume: z
@@ -59,5 +58,4 @@ export const candidateOnboardFormSchema = z.object({
   githubProfile: z.string().trim().min(2, {
     message: "Github Profile must be at least 2 characters.",
   }),
-  isPremiumUser: z.boolean(),
 });

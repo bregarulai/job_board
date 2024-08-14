@@ -8,9 +8,13 @@ import { recruiterOnboardFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
-import { formFieldType } from "@/constants";
+import { formFieldType, profileType } from "@/constants";
+import { useUser } from "@clerk/nextjs";
+import { createProfile } from "@/actions/profile.action";
 
 const RecruiterOnboardForm = () => {
+  const { isLoaded, user } = useUser();
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof recruiterOnboardFormSchema>>({
     resolver: zodResolver(recruiterOnboardFormSchema),
@@ -18,15 +22,20 @@ const RecruiterOnboardForm = () => {
       name: "",
       companyName: "",
       companyRole: "",
-      isPremiumUser: false,
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof recruiterOnboardFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof recruiterOnboardFormSchema>) {
+    const data = {
+      userId: user?.id,
+      role: profileType.RECRUITER,
+      email: user?.emailAddresses[0].emailAddress,
+      isPremiumUser: false,
+      recruiterInfo: values,
+    };
+
+    await createProfile({ profile: data, pathToRevalidate: "/onboard" });
   }
 
   return (
@@ -53,7 +62,9 @@ const RecruiterOnboardForm = () => {
           label="Company Role"
           placeholder="Enter your company role"
         />
-        <Button type="submit">Onboard as a Recruiter</Button>
+        <Button type="submit" disabled={!isLoaded}>
+          Onboard as a Recruiter
+        </Button>
       </form>
     </Form>
   );
