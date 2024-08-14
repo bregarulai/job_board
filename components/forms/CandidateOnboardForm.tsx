@@ -155,7 +155,11 @@ const CandidateOnboardForm = () => {
           label="Github Profile"
           placeholder="Enter your github profile"
         />
-        <Button type="submit">Onboard as a Cadidate</Button>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting
+            ? "Onboarding..."
+            : "Onboard as a Cadidate"}
+        </Button>
       </form>
     </Form>
   );

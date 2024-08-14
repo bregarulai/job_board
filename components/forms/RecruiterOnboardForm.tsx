@@ -60,8 +60,13 @@ const RecruiterOnboardForm = () => {
           label="Company Role"
           placeholder="Enter your company role"
         />
-        <Button type="submit" disabled={!isLoaded}>
-          Onboard as a Recruiter
+        <Button
+          type="submit"
+          disabled={!isLoaded || form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting
+            ? "Onboarding..."
+            : "Onboard as a Recruiter"}
         </Button>
       </form>
     </Form>

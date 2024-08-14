@@ -87,8 +87,11 @@ const PostNewJobForm = () => {
           label="Description"
           placeholder="Enter job description"
         />
-        <Button type="submit" disabled={!isLoaded || isLoading}>
-          Post New Job
+        <Button
+          type="submit"
+          disabled={!isLoaded || isLoading || form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? "Posting..." : "Post New Job"}
         </Button>
       </form>
     </Form>
