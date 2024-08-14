@@ -17,7 +17,9 @@ export const postNewJobAction = async ({
   }
 };
 
-export const fetchJobsForRecruiter = async (recruiterId: string) => {
+export const fetchJobsForRecruiter = async (
+  recruiterId: string | undefined
+) => {
   try {
     const jobs = await getJobsForRecruiter(recruiterId);
 

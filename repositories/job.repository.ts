@@ -14,7 +14,7 @@ export const addJob = async (job: JobSubmitData) => {
   }
 };
 
-export const getJobsForRecruiter = async (recruiterId: string) => {
+export const getJobsForRecruiter = async (recruiterId: string | undefined) => {
   try {
     await connectToDatabase();
     const results = await Job.find({ recruiterId: recruiterId });
