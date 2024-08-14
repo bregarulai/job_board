@@ -8,6 +8,7 @@ import "./globals.css";
 import CommonLayout from "@/components/CommonLayout";
 import Loading from "@/components/Loading";
 import { QueryProvider } from "@/providers/QueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <QueryProvider>
+            <Toaster />
             <Suspense fallback={<Loading />}>
               <CommonLayout>{children}</CommonLayout>
             </Suspense>

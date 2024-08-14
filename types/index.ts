@@ -37,8 +37,15 @@ export type CreateProfileParams = {
 };
 
 export type JobSubmitData = {
-  jobTitle: string;
-  jobDescription: string;
+  applicants: string[];
+  companyName: string;
+  description: string;
+  experience: string;
+  location: string;
+  recruiterId: string | undefined;
+  skills: string;
+  title: string;
+  type: string;
 };
 
 export type PostNewJobParams = {

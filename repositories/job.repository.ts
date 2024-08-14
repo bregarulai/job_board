@@ -7,7 +7,10 @@ import { JobSubmitData } from "@/types";
 export const addJob = async (job: JobSubmitData) => {
   try {
     await connectToDatabase();
-    const results = await Job.create(job);
+    const results = await Job.create({
+      ...job,
+      experience: Number(job.experience),
+    });
     return results;
   } catch (error) {
     console.error(`Error adding job: ${error}`);

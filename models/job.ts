@@ -5,9 +5,10 @@ const JobSchema = new Schema({
   companyName: String,
   title: String,
   location: String,
-  experience: String,
+  experience: Number,
   description: String,
   skills: String,
+  type: String,
   applicants: [
     {
       name: String,

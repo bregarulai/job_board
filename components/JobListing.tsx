@@ -2,8 +2,16 @@
 
 import { profileType } from "@/constants";
 import PostNewJob from "@/components/PostNewJob";
+import { useGetJobsForRecruiter } from "@/apiHooks/useGetJobsForRecruiter";
 
-const JobListing = ({ role }: { role: string }) => {
+const JobListing = ({
+  role,
+  recruiterId,
+}: {
+  role: profileType;
+  recruiterId: string | undefined;
+}) => {
+  const { data: jobs, isLoading } = useGetJobsForRecruiter(recruiterId);
   return (
     <div>
       <div className="mx-auto max-w-7xl">

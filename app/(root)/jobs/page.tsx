@@ -7,9 +7,10 @@ const JobsPage = async () => {
   const user = await currentUser();
 
   const profileInfo = await fetchProfileAction(user?.id);
+
   return (
     <div>
-      <JobListing role={profileInfo?.role} />
+      <JobListing role={profileInfo?.role} recruiterId={user?.id} />
     </div>
   );
 };

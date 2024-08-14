@@ -1,9 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { parseStringify } from "@/lib/utils";
 import { addJob, getJobsForRecruiter } from "@/repositories/job.repository";
 import { PostNewJobParams } from "@/types";
-import { revalidatePath } from "next/cache";
 
 export const postNewJobAction = async ({
   job,

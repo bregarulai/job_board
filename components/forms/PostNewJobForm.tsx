@@ -9,8 +9,10 @@ import { postNewJobFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
-import { formFieldType, profileType } from "@/constants";
+import { formFieldType } from "@/constants";
 import { useGetProfile } from "@/apiHooks/useGetProfile";
+import { postNewJobAction } from "@/actions/job.action";
+import { toast } from "sonner";
 
 const PostNewJobForm = () => {
   const { isLoaded, user } = useUser();
@@ -23,15 +25,25 @@ const PostNewJobForm = () => {
       title: "",
       type: "",
       location: "",
-      experince: "",
+      experience: "",
       description: "",
       skills: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof postNewJobFormSchema>) {
-    console.log(values);
-    const data = {};
+    const data = {
+      ...values,
+      recruiterId: user?.id,
+      applicants: [],
+    };
+
+    await postNewJobAction({
+      job: data,
+      pathToRevalidate: "/jobs",
+    });
+    form.reset();
+    toast.success("Job posted successfully");
   }
 
   return (
@@ -68,10 +80,10 @@ const PostNewJobForm = () => {
         />
         <CustomFormField
           control={form.control}
-          name="experince"
+          name="experience"
           fieldType={formFieldType.INPUT}
-          label="Experince"
-          placeholder="Enter experince required"
+          label="Experience"
+          placeholder="Enter experience required"
         />
         <CustomFormField
           control={form.control}
