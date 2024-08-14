@@ -2,6 +2,7 @@ import { Control } from "react-hook-form";
 
 export type HeaderProps = {
   userId: string | undefined;
+  role: RecruiterType | undefined;
 };
 
 export type FormFieldType = "input" | "file";

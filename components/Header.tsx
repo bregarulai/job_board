@@ -12,8 +12,9 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { HeaderProps } from "@/types";
+import { profileType } from "@/constants";
 
-const Header = ({ userId }: HeaderProps) => {
+const Header = ({ userId, role }: HeaderProps) => {
   const menuItems = [
     {
       label: "Home",
@@ -38,7 +39,7 @@ const Header = ({ userId }: HeaderProps) => {
     {
       label: "Activities",
       path: "/activities",
-      show: userId,
+      show: role === profileType.CANDIDATE,
     },
     {
       label: "Membership",
