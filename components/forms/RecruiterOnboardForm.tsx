@@ -15,7 +15,6 @@ import { createProfile } from "@/actions/profile.action";
 const RecruiterOnboardForm = () => {
   const { isLoaded, user } = useUser();
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof recruiterOnboardFormSchema>>({
     resolver: zodResolver(recruiterOnboardFormSchema),
     defaultValues: {
@@ -25,7 +24,6 @@ const RecruiterOnboardForm = () => {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof recruiterOnboardFormSchema>) {
     const data = {
       userId: user?.id,

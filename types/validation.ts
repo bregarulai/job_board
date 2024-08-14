@@ -11,6 +11,7 @@ export const recruiterOnboardFormSchema = z.object({
     message: "Comapany role must be at least 2 characters.",
   }),
 });
+
 export const candidateOnboardFormSchema = z.object({
   resume: z
     .string()
@@ -57,5 +58,29 @@ export const candidateOnboardFormSchema = z.object({
   }),
   githubProfile: z.string().trim().min(2, {
     message: "Github Profile must be at least 2 characters.",
+  }),
+});
+
+export const postNewJobFormSchema = z.object({
+  companyName: z.string().trim().min(2, {
+    message: "Company name must be at least 2 characters.",
+  }),
+  title: z.string().trim().min(2, {
+    message: "Title must be at least 2 characters.",
+  }),
+  type: z.string().trim().min(2, {
+    message: "Type must be at least 2 characters.",
+  }),
+  location: z.string().trim().min(2, {
+    message: "Location must be at least 2 characters.",
+  }),
+  experince: z.string().trim().min(2, {
+    message: "Experience must be at least 2 characters.",
+  }),
+  description: z.string().trim().min(2, {
+    message: "Description must be at least 2 characters.",
+  }),
+  skills: z.string().trim().min(2, {
+    message: "Type must be at least 2 characters.",
   }),
 });
