@@ -9,3 +9,7 @@ export enum profileType {
   CANDIDATE = "candidate",
   RECRUITER = "recruiter",
 }
+
+export enum queryKeys {
+  PROFILE = "profile",
+}

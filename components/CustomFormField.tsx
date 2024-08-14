@@ -18,7 +18,7 @@ const RenderField = ({
   field: any;
   props: CustomFormFieldProps;
 }) => {
-  const { fieldType, placeholder } = props;
+  const { fieldType, placeholder, disabled } = props;
 
   switch (fieldType) {
     case formFieldType.INPUT:
@@ -26,6 +26,7 @@ const RenderField = ({
         <FormControl>
           <Input
             placeholder={placeholder}
+            disabled={disabled}
             {...field}
             className="h-11 rounded-md px-4 border bg-gray-100 drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:drop-shadow-lg focus-visible:outline-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           />
@@ -62,7 +63,7 @@ const CustomFormField = (props: CustomFormFieldProps) => {
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="flex flex-col items-start gap-1">
           {label && (
             <FormLabel className="text-[14px] leading-[18px] font-medium">
               {label}

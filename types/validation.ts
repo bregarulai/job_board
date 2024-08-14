@@ -74,8 +74,8 @@ export const postNewJobFormSchema = z.object({
   location: z.string().trim().min(2, {
     message: "Location must be at least 2 characters.",
   }),
-  experince: z.string().trim().min(2, {
-    message: "Experience must be at least 2 characters.",
+  experince: z.string().trim().min(1, {
+    message: "Experience must be at least 1 characters.",
   }),
   description: z.string().trim().min(2, {
     message: "Description must be at least 2 characters.",

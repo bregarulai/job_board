@@ -3,30 +3,34 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useUser } from "@clerk/nextjs";
 
 import { postNewJobFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
 import { formFieldType, profileType } from "@/constants";
-import { useUser } from "@clerk/nextjs";
+import { useGetProfile } from "@/apiHooks/useGetProfile";
 
 const PostNewJobForm = () => {
   const { isLoaded, user } = useUser();
+  const { data: profile, isLoading } = useGetProfile(user?.id);
 
   const form = useForm<z.infer<typeof postNewJobFormSchema>>({
     resolver: zodResolver(postNewJobFormSchema),
     defaultValues: {
-      companyName: "",
+      companyName: profile?.recruiterInfo?.companyName,
       title: "",
       type: "",
       location: "",
       experince: "",
       description: "",
+      skills: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof postNewJobFormSchema>) {
+    console.log(values);
     const data = {};
   }
 
@@ -39,6 +43,7 @@ const PostNewJobForm = () => {
           fieldType={formFieldType.INPUT}
           label="Company Name"
           placeholder="Enter company name"
+          disabled
         />
         <CustomFormField
           control={form.control}
@@ -70,12 +75,19 @@ const PostNewJobForm = () => {
         />
         <CustomFormField
           control={form.control}
+          name="skills"
+          fieldType={formFieldType.INPUT}
+          label="Skills"
+          placeholder="Enter skills required"
+        />
+        <CustomFormField
+          control={form.control}
           name="description"
           fieldType={formFieldType.INPUT}
           label="Description"
           placeholder="Enter job description"
         />
-        <Button type="submit" disabled={!isLoaded}>
+        <Button type="submit" disabled={!isLoaded || isLoading}>
           Post New Job
         </Button>
       </form>
