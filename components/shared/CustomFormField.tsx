@@ -18,7 +18,7 @@ const RenderField = ({
   field: any;
   props: CustomFormFieldProps;
 }) => {
-  const { fieldType, placeholder, disabled } = props;
+  const { fieldType, placeholder, disabled, handleFileChange, type } = props;
 
   switch (fieldType) {
     case formFieldType.INPUT:
@@ -27,6 +27,7 @@ const RenderField = ({
           <Input
             placeholder={placeholder}
             disabled={disabled}
+            type={type ? type : "text"}
             {...field}
             className="h-11 rounded-md px-4 border bg-gray-100 drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:drop-shadow-lg focus-visible:outline-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           />
@@ -38,14 +39,18 @@ const RenderField = ({
         <FormControl>
           <FormLabel
             htmlFor={field.name}
-            className="capitalize text-[14px] leading-[18px] font-medium flex items-center gap-3 pl-3 mx-auto mt-6 text-center border-2 border-dashed bg-gray-100 border-gray-300 rounded-lg cursor-pointer"
+            className="capitalize w-full text-[14px] leading-[18px] font-medium flex items-center gap-3 pl-3 mx-auto mt-6 text-center border-2 border-dashed bg-gray-100 border-gray-300 rounded-lg cursor-pointer"
           >
             <h2>{field.name}</h2>
             <Input
               id={field.name}
-              onChange={field.onChange}
               type="file"
               {...field}
+              onChange={(e) => {
+                !!handleFileChange && handleFileChange(e);
+                field.onChange(e);
+              }}
+              value={field.value}
             />
           </FormLabel>
         </FormControl>

@@ -1,3 +1,4 @@
+import { Database } from "@/database.types";
 import { Control } from "react-hook-form";
 
 export type HeaderProps = {
@@ -15,6 +16,8 @@ export type CustomFormFieldProps = {
   placeholder?: string;
   disabled?: boolean;
   children?: React.ReactNode;
+  handleFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
 };
 
 export type RecruiterType = "candidate" | "recruiter";
@@ -24,10 +27,27 @@ export type RecruiterSubmitData = {
   role: RecruiterType;
   email: string | undefined;
   isPremiumUser: boolean;
-  recruiterInfo: {
+  recruiterInfo?: {
     name: string;
     companyName: string;
     companyRole: string;
+  };
+  candidateInfo?: {
+    resume: string;
+    name: string;
+    currentCompany: string;
+    currentJobLoacation: string;
+    preferredJobLoacation: string;
+    currentSalary: string;
+    noticePeriod: string;
+    skills: string;
+    previousCompanies: string;
+    totalExperience: string;
+    college: string;
+    collegeLocation: string;
+    graduationYear: string;
+    linkedinProfile: string;
+    githubProfile: string;
   };
 };
 

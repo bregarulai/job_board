@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,13 +9,26 @@ import { candidateOnboardFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/shared/CustomFormField";
-import { formFieldType } from "@/constants";
+import { formFieldType, profileType } from "@/constants";
+import { useUser } from "@clerk/nextjs";
+import { useCreateProfile } from "@/features/onboard/api/useCreateProfile";
+import { createClient } from "@supabase/supabase-js";
 
 const CandidateOnboardForm = () => {
+  const supabaseClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+  const { isLoaded, user } = useUser();
+  const createProfileMutation = useCreateProfile();
+
+  const [file, setFile] = useState<File | null>(null);
+  const [filePath, setFilePath] = useState<string>("");
+
   const form = useForm<z.infer<typeof candidateOnboardFormSchema>>({
     resolver: zodResolver(candidateOnboardFormSchema),
     defaultValues: {
-      resume: undefined,
+      resume: "",
       name: "",
       currentCompany: "",
       currentJobLoacation: "",
@@ -32,8 +46,51 @@ const CandidateOnboardForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof candidateOnboardFormSchema>) {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const selectedFile = e.target.files ? e.target.files[0] : null;
+    setFile(selectedFile);
+  };
+
+  const handleUploadPdfToSupabase = async (file: File) => {
+    console.log("Entered handleUploadPdfToSupabase");
+    const { data, error } = await supabaseClient.storage
+      .from("job-board")
+      .upload(`/public/${file.name}`, file, {
+        cacheControl: "3600",
+        contentType: file.type,
+        upsert: false,
+      });
+    console.log("File data: ", data);
+    console.log("File error: ", error);
+    if (error) {
+      console.error(`There was an error uploading the file: ${error.message}`);
+      return;
+    }
+
+    if (data) {
+      setFilePath(data.path);
+    }
+  };
+
+  async function onSubmit(values: z.infer<typeof candidateOnboardFormSchema>) {
     console.log(values);
+    await handleUploadPdfToSupabase(file!);
+    const candidateInfo = {
+      ...values,
+      resume: filePath,
+    };
+
+    const data = {
+      userId: user?.id,
+      role: profileType.CANDIDATE,
+      email: user?.emailAddresses[0].emailAddress,
+      isPremiumUser: false,
+      candidateInfo: candidateInfo,
+    };
+
+    createProfileMutation.mutate(data);
+    form.reset();
   }
 
   return (
@@ -43,6 +100,7 @@ const CandidateOnboardForm = () => {
           control={form.control}
           name="resume"
           fieldType={formFieldType.FILE}
+          handleFileChange={handleFileChange}
         />
         <CustomFormField
           control={form.control}
@@ -80,6 +138,7 @@ const CandidateOnboardForm = () => {
             fieldType={formFieldType.INPUT}
             label="Current Salary"
             placeholder="Enter your current salary"
+            type="number"
           />
         </div>
 
@@ -106,6 +165,7 @@ const CandidateOnboardForm = () => {
             fieldType={formFieldType.INPUT}
             label="Total Experience"
             placeholder="Enter your total experience"
+            type="number"
           />
           <CustomFormField
             control={form.control}
@@ -113,6 +173,7 @@ const CandidateOnboardForm = () => {
             fieldType={formFieldType.INPUT}
             label="Notice Period"
             placeholder="Enter your notice period"
+            type="number"
           />
         </div>
 
@@ -155,7 +216,10 @@ const CandidateOnboardForm = () => {
           label="Github Profile"
           placeholder="Enter your github profile"
         />
-        <Button type="submit" disabled={form.formState.isSubmitting}>
+        <Button
+          type="submit"
+          disabled={!isLoaded || form.formState.isSubmitting}
+        >
           {form.formState.isSubmitting
             ? "Onboarding..."
             : "Onboard as a Cadidate"}
