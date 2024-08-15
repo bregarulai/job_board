@@ -50,7 +50,6 @@ export type JobSubmitData = {
 
 export type PostNewJobParams = {
   job: JobSubmitData;
-  pathToRevalidate: string;
 };
 
 export type RecruiterJobType = {

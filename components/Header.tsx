@@ -54,7 +54,7 @@ const Header = ({ userId, role }: HeaderProps) => {
   ];
 
   return (
-    <header className="flex h-16 w-full shrink-0 items-center">
+    <header className="flex h-16 w-full shrink-0 items-center px-6 lg:px-8">
       <Sheet>
         <SheetTrigger asChild>
           <Button

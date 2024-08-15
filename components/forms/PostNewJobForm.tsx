@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
 
 import { postNewJobFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
@@ -11,12 +12,13 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
 import { formFieldType } from "@/constants";
 import { useGetProfile } from "@/apiHooks/useGetProfile";
-import { postNewJobAction } from "@/actions/job.action";
-import { toast } from "sonner";
+import { usePostNewJob } from "@/apiHooks/usePostNewJob";
 
 const PostNewJobForm = () => {
   const { isLoaded, user } = useUser();
   const { data: profile, isLoading } = useGetProfile(user?.id);
+
+  const newJobMutation = usePostNewJob();
 
   const form = useForm<z.infer<typeof postNewJobFormSchema>>({
     resolver: zodResolver(postNewJobFormSchema),
@@ -37,13 +39,8 @@ const PostNewJobForm = () => {
       recruiterId: user?.id,
       applicants: [],
     };
-
-    await postNewJobAction({
-      job: data,
-      pathToRevalidate: "/jobs",
-    });
+    newJobMutation.mutate(data);
     form.reset();
-    toast.success("Job posted successfully");
   }
 
   return (

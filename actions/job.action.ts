@@ -6,13 +6,9 @@ import { parseStringify } from "@/lib/utils";
 import { addJob, getJobsForRecruiter } from "@/repositories/job.repository";
 import { PostNewJobParams } from "@/types";
 
-export const postNewJobAction = async ({
-  job,
-  pathToRevalidate,
-}: PostNewJobParams) => {
+export const postNewJobAction = async ({ job }: PostNewJobParams) => {
   try {
     await addJob(job);
-    revalidatePath(pathToRevalidate);
   } catch (error) {
     console.error(`Error while posting new job: ${error}`);
   }
