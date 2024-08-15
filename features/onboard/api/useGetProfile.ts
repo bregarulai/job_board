@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchProfileAction } from "@/actions/profile.action";
+import { fetchProfileAction } from "@/features/onboard/actions/profile.action";
 import { queryKeys } from "@/constants";
 
 export const useGetProfile = (userId: string | undefined) => {

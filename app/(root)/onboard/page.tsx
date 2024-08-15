@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 
-import { fetchProfileAction } from "@/actions/profile.action";
+import { fetchProfileAction } from "@/features/onboard/actions/profile.action";
 import { profileType } from "@/constants";
 
-import OnBoard from "@/components/OnBoard";
+import OnBoard from "@/features/onboard/components/OnBoard";
 
 const OnboardPage = async () => {
   const user = await currentUser();

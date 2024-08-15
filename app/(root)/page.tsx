@@ -1,4 +1,4 @@
-import { fetchProfileAction } from "@/actions/profile.action";
+import { fetchProfileAction } from "@/features/onboard/actions/profile.action";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 

@@ -7,10 +7,10 @@ import { z } from "zod";
 import { recruiterOnboardFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import CustomFormField from "@/components/CustomFormField";
+import CustomFormField from "@/components/shared/CustomFormField";
 import { formFieldType, profileType } from "@/constants";
 import { useUser } from "@clerk/nextjs";
-import { createProfile } from "@/actions/profile.action";
+import { createProfile } from "@/features/onboard/actions/profile.action";
 
 const RecruiterOnboardForm = () => {
   const { isLoaded, user } = useUser();

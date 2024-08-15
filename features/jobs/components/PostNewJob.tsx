@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import PostNewJobForm from "@/components/forms/PostNewJobForm";
 import { useUser } from "@clerk/nextjs";
-import { useGetProfile } from "@/apiHooks/useGetProfile";
+import { useGetProfile } from "@/features/onboard/api/useGetProfile";
 
 const PostNewJob = () => {
   const { isLoaded, user } = useUser();

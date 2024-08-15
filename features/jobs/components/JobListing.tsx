@@ -1,9 +1,9 @@
 "use client";
 
 import { profileType } from "@/constants";
-import PostNewJob from "@/components/PostNewJob";
-import { useGetJobsForRecruiter } from "@/apiHooks/useGetJobsForRecruiter";
-import RecruiterJobCard from "@/components/RecruiderJobCard";
+import PostNewJob from "@/features/jobs/components/PostNewJob";
+import { useGetJobsForRecruiter } from "@/features/jobs/api/useGetJobsForRecruiter";
+import RecruiterJobCard from "@/features/jobs/components/RecruiderJobCard";
 import { RecruiterJobType } from "@/types";
 
 const JobListing = ({

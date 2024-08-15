@@ -7,7 +7,7 @@ import { z } from "zod";
 import { candidateOnboardFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import CustomFormField from "@/components/CustomFormField";
+import CustomFormField from "@/components/shared/CustomFormField";
 import { formFieldType } from "@/constants";
 
 const CandidateOnboardForm = () => {

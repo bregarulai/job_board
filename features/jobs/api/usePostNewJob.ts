@@ -1,4 +1,4 @@
-import { postNewJobAction } from "@/actions/job.action";
+import { postNewJobAction } from "@/features/jobs/actions/job.action";
 import { queryKeys } from "@/constants";
 import { JobSubmitData } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

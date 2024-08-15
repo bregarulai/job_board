@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 
-import { fetchProfileAction } from "@/actions/profile.action";
-import JobListing from "@/components/JobListing";
+import { fetchProfileAction } from "@/features/onboard/actions/profile.action";
+import JobListing from "@/features/jobs/components/JobListing";
 
 const JobsPage = async () => {
   const user = await currentUser();

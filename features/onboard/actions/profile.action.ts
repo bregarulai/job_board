@@ -2,9 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 
-import { addProfile, getProfile } from "@/repositories/profile.repository";
+import {
+  addProfile,
+  getProfile,
+} from "@/features/onboard/repositories/profile.repository";
 import { CreateProfileParams } from "@/types";
-import { parse } from "path";
 import { parseStringify } from "@/lib/utils";
 
 export const createProfile = async ({

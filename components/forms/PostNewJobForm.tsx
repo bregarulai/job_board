@@ -4,15 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUser } from "@clerk/nextjs";
-import { toast } from "sonner";
 
 import { postNewJobFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import CustomFormField from "@/components/CustomFormField";
+import CustomFormField from "@/components/shared/CustomFormField";
 import { formFieldType } from "@/constants";
-import { useGetProfile } from "@/apiHooks/useGetProfile";
-import { usePostNewJob } from "@/apiHooks/usePostNewJob";
+import { useGetProfile } from "@/features/onboard/api/useGetProfile";
+import { usePostNewJob } from "@/features/jobs/api/usePostNewJob";
 
 const PostNewJobForm = () => {
   const { isLoaded, user } = useUser();

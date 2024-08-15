@@ -1,7 +1,7 @@
 import { RecruiterJobType } from "@/types";
 import JobIcon from "@/components/JobIcon";
 import { Button } from "@/components/ui/button";
-import CommonCard from "./CommonCard";
+import CommonCard from "@/components/shared/CommonCard";
 
 const RecruiterJobCard = ({ job }: { job: RecruiterJobType }) => {
   return (
