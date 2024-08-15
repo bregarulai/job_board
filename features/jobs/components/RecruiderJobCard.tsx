@@ -5,12 +5,14 @@ import CommonCard from "@/components/shared/CommonCard";
 
 const RecruiterJobCard = ({ job }: { job: RecruiterJobType }) => {
   return (
-    <CommonCard
-      title={job.title}
-      icon={<JobIcon />}
-      description={job.description}
-      footerContent={<Button>12 Aplicants</Button>}
-    />
+    <div>
+      <CommonCard
+        title={job.title}
+        icon={<JobIcon />}
+        description={job.description}
+        footerContent={<Button>12 Aplicants</Button>}
+      />
+    </div>
   );
 };
 
