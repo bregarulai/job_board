@@ -3,7 +3,7 @@
 import { profileType } from "@/constants";
 import PostNewJob from "@/components/PostNewJob";
 import { useGetJobsForRecruiter } from "@/apiHooks/useGetJobsForRecruiter";
-import RecruiderJobCard from "@/components/RecruiderJobCard";
+import RecruiterJobCard from "@/components/RecruiderJobCard";
 import { RecruiterJobType } from "@/types";
 
 const JobListing = ({
@@ -18,7 +18,7 @@ const JobListing = ({
     <div>
       <div className="mx-auto max-w-7xl">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+          <h1 className="text-4xl font-bold tracking-tight text-gray-800">
             {role === profileType.CANDIDATE
               ? "Explore All Jobs"
               : "Jobs Dashboard"}
@@ -37,7 +37,7 @@ const JobListing = ({
                         role === profileType.CANDIDATE ? (
                           <p>Candidate Card</p>
                         ) : (
-                          <RecruiderJobCard job={job} key={job?._id} />
+                          <RecruiterJobCard job={job} key={job?._id} />
                         )
                       )
                     : null}

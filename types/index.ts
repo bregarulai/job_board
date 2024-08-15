@@ -65,3 +65,10 @@ export type RecruiterJobType = {
   title: string;
   type: string;
 };
+
+export type CommonCardProps = {
+  title: string;
+  icon?: React.ReactNode;
+  description?: string;
+  footerContent?: React.ReactNode;
+};
