@@ -3,17 +3,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useUser } from "@clerk/nextjs";
 
 import { recruiterOnboardFormSchema } from "@/types/validation";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { formFieldType, profileType } from "@/constants";
-import { useUser } from "@clerk/nextjs";
-import { createProfile } from "@/features/onboard/actions/profile.action";
+import { useCreateProfile } from "@/features/onboard/api/useCreateProfile";
 
 const RecruiterOnboardForm = () => {
   const { isLoaded, user } = useUser();
+  const createProfileMutation = useCreateProfile();
 
   const form = useForm<z.infer<typeof recruiterOnboardFormSchema>>({
     resolver: zodResolver(recruiterOnboardFormSchema),
@@ -33,7 +34,8 @@ const RecruiterOnboardForm = () => {
       recruiterInfo: values,
     };
 
-    await createProfile({ profile: data, pathToRevalidate: "/onboard" });
+    createProfileMutation.mutate(data);
+    form.reset();
   }
 
   return (

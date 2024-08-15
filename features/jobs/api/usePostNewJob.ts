@@ -1,8 +1,9 @@
+import { toast } from "sonner";
+
 import { postNewJobAction } from "@/features/jobs/actions/job.action";
 import { queryKeys } from "@/constants";
 import { JobSubmitData } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 
 export const usePostNewJob = () => {
   const queryClient = useQueryClient();

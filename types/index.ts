@@ -33,7 +33,6 @@ export type RecruiterSubmitData = {
 
 export type CreateProfileParams = {
   profile: RecruiterSubmitData;
-  pathToRevalidate: string;
 };
 
 export type JobSubmitData = {
