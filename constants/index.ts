@@ -15,4 +15,7 @@ export enum queryKeys {
   JOBS_FOR_RECRUITER = "jobsForRecruiter",
   JOBS_FOR_CANDIDATE = "jobsForCandidate",
   JOB = "job",
+  APPLICATIONS_FOR_RECRUITER = "applicationsForRecruiter",
+  APPLICATIONS_FOR_CANDIDATE = "applicationsForCandidate",
+  APPLICATION = "application",
 }
