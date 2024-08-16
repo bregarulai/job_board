@@ -26,3 +26,13 @@ export const getJobsForRecruiter = async (recruiterId: string | undefined) => {
     console.error(`Error getting jobs for recruiter: ${error}`);
   }
 };
+
+export const getJobsForCandidate = async () => {
+  try {
+    await connectToDatabase();
+    const results = await Job.find();
+    return results;
+  } catch (error) {
+    console.error(`Error getting jobs for candidate: ${error}`);
+  }
+};

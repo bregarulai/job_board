@@ -13,4 +13,5 @@ export enum profileType {
 export enum queryKeys {
   PROFILE = "profile",
   JOBS_FOR_RECRUITER = "jobsForRecruiter",
+  JOBS_FOR_CANDIDATE = "jobsForCandidate",
 }

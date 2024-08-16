@@ -5,6 +5,7 @@ import PostNewJob from "@/features/jobs/components/PostNewJob";
 import { useGetJobsForRecruiter } from "@/features/jobs/api/useGetJobsForRecruiter";
 import RecruiterJobCard from "@/features/jobs/components/RecruiderJobCard";
 import { RecruiterJobType } from "@/types";
+import { useGetJobsForCandidate } from "@/features/jobs/api/useGetJobsForCandidate";
 
 const JobListing = ({
   role,
@@ -13,7 +14,11 @@ const JobListing = ({
   role: profileType;
   recruiterId: string | undefined;
 }) => {
-  const { data: jobs, isLoading } = useGetJobsForRecruiter(recruiterId);
+  const { data: recruiterJobs, isLoading } =
+    useGetJobsForRecruiter(recruiterId);
+  const { data: candidateJobs } = useGetJobsForCandidate();
+
+  const jobListing = profileType.CANDIDATE ? candidateJobs : recruiterJobs;
   return (
     <div>
       <div className="mx-auto max-w-7xl">
@@ -32,8 +37,8 @@ const JobListing = ({
             <div className="lg:col-span-4">
               <div className="container mx-auto p-0 space-y-8">
                 <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-                  {jobs && jobs.length > 0
-                    ? jobs.map((job: RecruiterJobType) =>
+                  {jobListing && jobListing.length > 0
+                    ? jobListing.map((job: RecruiterJobType) =>
                         role === profileType.CANDIDATE ? (
                           <p>Candidate Card</p>
                         ) : (

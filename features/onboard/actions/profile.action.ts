@@ -11,6 +11,7 @@ import { revalidatePath } from "next/cache";
 export const createProfileAction = async ({ profile }: CreateProfileParams) => {
   try {
     await addProfile(profile);
+    revalidatePath("/onboard");
   } catch (error) {
     console.error(`Error while creating profile: ${error}`);
   }

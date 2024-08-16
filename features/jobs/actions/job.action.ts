@@ -3,6 +3,7 @@
 import { parseStringify } from "@/lib/utils";
 import {
   addJob,
+  getJobsForCandidate,
   getJobsForRecruiter,
 } from "@/features/jobs/repositories/job.repository";
 import { PostNewJobParams } from "@/types";
@@ -24,5 +25,14 @@ export const fetchJobsForRecruiter = async (
     return parseStringify(jobs);
   } catch (error) {
     console.error(`Error while fetching jobs for recruiter: ${error}`);
+  }
+};
+
+export const fetchJobsForCandidate = async () => {
+  try {
+    const jobs = await getJobsForCandidate();
+    return parseStringify(jobs);
+  } catch (error) {
+    console.error(`Error while fetching jobs for candidate: ${error}`);
   }
 };
