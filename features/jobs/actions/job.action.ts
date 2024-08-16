@@ -66,7 +66,7 @@ export const addJobApplicationAction = async (
 };
 
 export const fetchJobApplicationsForCandidateAction = async (
-  candidateId: string
+  candidateId: string | undefined
 ) => {
   try {
     const jobApplications = await getJobApplicationsForCandidate(candidateId);
@@ -79,7 +79,7 @@ export const fetchJobApplicationsForCandidateAction = async (
 };
 
 export const fetchJobApplicationsForRecruiterAction = async (
-  recruiterId: string
+  recruiterId: string | undefined
 ) => {
   try {
     const jobApplications = await getJobApplicationsForRrecruiter(recruiterId);

@@ -1,13 +1,24 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+
 import { Button } from "@/components/ui/button";
 import { useGetJob } from "@/features/jobs/api/useGetJob";
-import { Loader2 } from "lucide-react";
+import { useGetProfile } from "@/features/onboard/api/useGetProfile";
+import { applicationStatus } from "@/constants";
+import { JobApplicationType } from "@/types";
+import { useApplyForNewJob } from "@/features/jobs/api/useApplyForNewJob";
 
 const JobDetails = ({ jobId }: { jobId: string }) => {
   const { data: job, isLoading } = useGetJob(jobId);
+  const { user, isLoaded } = useUser();
+  const applyForJob = useApplyForNewJob();
+  const { data: profileInfo, isLoading: isLoadingProfile } = useGetProfile(
+    user?.id
+  );
 
-  if (isLoading) {
+  if (isLoading || isLoadingProfile || !isLoaded) {
     return (
       <div className="flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-slate-500 mt-32" />
@@ -25,6 +36,19 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
   } = job;
 
   const skillsList = skills.split(",");
+
+  const handleJobApply = () => {
+    const application: JobApplicationType = {
+      recruiterId: job.recruiterId,
+      name: profileInfo.candidateInfo.name,
+      email: profileInfo.email,
+      candidateUserId: profileInfo.userId,
+      status: [applicationStatus.APPLIED],
+      jobId: job._id,
+    };
+
+    applyForJob.mutate(application);
+  };
 
   return (
     <div className="pt-6 pb-24">
@@ -49,7 +73,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
         </div>
       </div>
       <div className="py-4">
-        <Button>Apply</Button>
+        <Button onClick={handleJobApply}>Apply</Button>
       </div>
       <div className="grid gap-4">
         <h4 className="text-xl font-semibold">About the Job</h4>

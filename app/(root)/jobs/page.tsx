@@ -10,7 +10,11 @@ const JobsPage = async () => {
 
   return (
     <div>
-      <JobListing role={profileInfo?.role} recruiterId={user?.id} />
+      <JobListing
+        role={profileInfo?.role}
+        recruiterId={user?.id}
+        userId={user?.id}
+      />
     </div>
   );
 };

@@ -1,27 +1,49 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+
 import { profileType } from "@/constants";
 import PostNewJob from "@/features/jobs/components/PostNewJob";
 import { useGetJobsForRecruiter } from "@/features/jobs/api/useGetJobsForRecruiter";
 import RecruiterJobCard from "@/features/jobs/components/RecruiderJobCard";
 import { RecruiterJobType } from "@/types";
 import { useGetJobsForCandidate } from "@/features/jobs/api/useGetJobsForCandidate";
-import CandidateJobCard from "./CandidateJobCard";
+import CandidateJobCard from "@/features/jobs/components/CandidateJobCard";
+import { useGetApplicationsForCandidate } from "@/features/jobs/api/useGetApplicationsForCandidate";
+import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
 
 const JobListing = ({
   role,
   recruiterId,
+  userId,
 }: {
   role: profileType;
   recruiterId: string | undefined;
+  userId: string | undefined;
 }) => {
-  const { data: recruiterJobs, isLoading } =
-    useGetJobsForRecruiter(recruiterId);
-  const { data: candidateJobs } = useGetJobsForCandidate();
+  const jobResults =
+    role === profileType.CANDIDATE
+      ? useGetJobsForCandidate()
+      : useGetJobsForRecruiter(recruiterId);
 
-  const jobListing =
-    role === profileType.CANDIDATE ? candidateJobs : recruiterJobs;
-  console.log(jobListing);
+  const applicationResults =
+    role === profileType.CANDIDATE
+      ? useGetApplicationsForCandidate(userId)
+      : useGetApplicationsForRecruiter(recruiterId);
+
+  const { data: ApplicationListing, isLoading: isLoadingApplications } =
+    applicationResults;
+
+  const { data: jobListing, isLoading: isLoadingJobs } = jobResults;
+
+  if (isLoadingJobs || isLoadingApplications) {
+    return (
+      <div className="flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-slate-500 mt-32" />
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="mx-auto max-w-7xl">

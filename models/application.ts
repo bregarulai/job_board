@@ -7,6 +7,7 @@ const ApplicationSchema = new Schema(
     email: String,
     candidateUserId: String,
     status: Array,
+    jobId: String,
   },
   { timestamps: true }
 );

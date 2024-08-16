@@ -58,7 +58,9 @@ export const addJobApplication = async (application: JobApplicationType) => {
   }
 };
 
-export const getJobApplicationsForCandidate = async (candidateId: string) => {
+export const getJobApplicationsForCandidate = async (
+  candidateId: string | undefined
+) => {
   try {
     await connectToDatabase();
     const results = await Application.find({
@@ -70,7 +72,9 @@ export const getJobApplicationsForCandidate = async (candidateId: string) => {
   }
 };
 
-export const getJobApplicationsForRrecruiter = async (recruiterId: string) => {
+export const getJobApplicationsForRrecruiter = async (
+  recruiterId: string | undefined
+) => {
   try {
     await connectToDatabase();
     const results = await Application.find({

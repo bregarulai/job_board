@@ -19,3 +19,10 @@ export enum queryKeys {
   APPLICATIONS_FOR_CANDIDATE = "applicationsForCandidate",
   APPLICATION = "application",
 }
+
+export enum applicationStatus {
+  PENDING = "Pending",
+  ACCEPTED = "Accepted",
+  REJECTED = "Rejected",
+  APPLIED = "Applied",
+}

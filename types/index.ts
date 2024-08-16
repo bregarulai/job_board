@@ -109,4 +109,5 @@ export type JobApplicationType = {
   email: string;
   candidateUserId: string;
   status: string[];
+  jobId: string;
 };
