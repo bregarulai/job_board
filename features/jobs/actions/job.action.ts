@@ -7,10 +7,12 @@ import {
   getJobsForRecruiter,
 } from "@/features/jobs/repositories/job.repository";
 import { PostNewJobParams } from "@/types";
+import { revalidatePath } from "next/cache";
 
 export const postNewJobAction = async ({ job }: PostNewJobParams) => {
   try {
     await addJob(job);
+    revalidatePath("/jobs");
   } catch (error) {
     console.error(`Error while posting new job: ${error}`);
   }

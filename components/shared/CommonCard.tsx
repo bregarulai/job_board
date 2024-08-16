@@ -23,7 +23,7 @@ const CommonCard = ({
           </CardTitle>
         ) : null}
         {description ? (
-          <CardDescription className="mt-3 text-gray-500">
+          <CardDescription className="mt-3 text-gray-500 line-clamp-1">
             {description}
           </CardDescription>
         ) : null}

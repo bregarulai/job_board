@@ -19,6 +19,9 @@ export const usePostNewJob = () => {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.JOBS_FOR_RECRUITER],
       });
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.JOBS_FOR_CANDIDATE],
+      });
     },
     onError: () => {
       toast.error("Failed to post job");

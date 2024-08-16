@@ -90,3 +90,11 @@ export type CommonCardProps = {
   description?: string;
   footerContent?: React.ReactNode;
 };
+
+export type CandidateJobCardProps = {
+  job: RecruiterJobType;
+};
+
+export type RecruiterJobCardProps = {
+  job: RecruiterJobType;
+};

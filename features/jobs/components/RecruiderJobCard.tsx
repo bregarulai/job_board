@@ -1,9 +1,9 @@
-import { RecruiterJobType } from "@/types";
+import { RecruiterJobCardProps } from "@/types";
 import JobIcon from "@/components/JobIcon";
 import { Button } from "@/components/ui/button";
 import CommonCard from "@/components/shared/CommonCard";
 
-const RecruiterJobCard = ({ job }: { job: RecruiterJobType }) => {
+const RecruiterJobCard = ({ job }: RecruiterJobCardProps) => {
   return (
     <div>
       <CommonCard
