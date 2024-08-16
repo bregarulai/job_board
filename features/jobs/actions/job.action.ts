@@ -1,13 +1,15 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { parseStringify } from "@/lib/utils";
 import {
   addJob,
+  getJobById,
   getJobsForCandidate,
   getJobsForRecruiter,
 } from "@/features/jobs/repositories/job.repository";
 import { PostNewJobParams } from "@/types";
-import { revalidatePath } from "next/cache";
 
 export const postNewJobAction = async ({ job }: PostNewJobParams) => {
   try {
@@ -36,5 +38,14 @@ export const fetchJobsForCandidate = async () => {
     return parseStringify(jobs);
   } catch (error) {
     console.error(`Error while fetching jobs for candidate: ${error}`);
+  }
+};
+
+export const fetchJobById = async (id: string) => {
+  try {
+    const job = await getJobById(id);
+    return parseStringify(job);
+  } catch (error) {
+    console.error(`Error while fetching job by id: ${error}`);
   }
 };

@@ -2,6 +2,7 @@ import JobIcon from "@/components/JobIcon";
 import CommonCard from "@/components/shared/CommonCard";
 import { Button } from "@/components/ui/button";
 import { CandidateJobCardProps } from "@/types";
+import Link from "next/link";
 
 const CandidateJobCard = ({ job }: CandidateJobCardProps) => {
   return (
@@ -10,7 +11,11 @@ const CandidateJobCard = ({ job }: CandidateJobCardProps) => {
         title={job.title}
         description={job.companyName}
         icon={<JobIcon />}
-        footerContent={<Button>View Details</Button>}
+        footerContent={
+          <Button>
+            <Link href={`/jobs/${job._id}`}>View Details</Link>
+          </Button>
+        }
       />
     </>
   );

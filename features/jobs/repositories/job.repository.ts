@@ -36,3 +36,13 @@ export const getJobsForCandidate = async () => {
     console.error(`Error getting jobs for candidate: ${error}`);
   }
 };
+
+export const getJobById = async (id: string) => {
+  try {
+    await connectToDatabase();
+    const results = await Job.findById(id);
+    return results;
+  } catch (error) {
+    console.error(`Error getting job by id: ${error}`);
+  }
+};

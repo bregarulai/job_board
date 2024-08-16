@@ -98,3 +98,7 @@ export type CandidateJobCardProps = {
 export type RecruiterJobCardProps = {
   job: RecruiterJobType;
 };
+
+export type ParamsProps = {
+  params: { id: string };
+};
