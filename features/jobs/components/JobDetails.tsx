@@ -2,23 +2,41 @@
 
 import { Loader2 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import { redirect, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useGetJob } from "@/features/jobs/api/useGetJob";
 import { useGetProfile } from "@/features/onboard/api/useGetProfile";
-import { applicationStatus } from "@/constants";
+import { applicationStatus, profileType } from "@/constants";
 import { JobApplicationType } from "@/types";
 import { useApplyForNewJob } from "@/features/jobs/api/useApplyForNewJob";
+import { useGetApplicationsForCandidate } from "../api/useGetApplicationsForCandidate";
+import { useGetApplicationsForRecruiter } from "../api/useGetApplicationsForRecruiter";
 
 const JobDetails = ({ jobId }: { jobId: string }) => {
-  const { data: job, isLoading } = useGetJob(jobId);
+  const router = useRouter();
+  const { data: job, isLoading: isLoadingJob } = useGetJob(jobId);
   const { user, isLoaded } = useUser();
-  const applyForJob = useApplyForNewJob();
   const { data: profileInfo, isLoading: isLoadingProfile } = useGetProfile(
     user?.id
   );
+  let role;
+  if (profileInfo?.role === profileType.CANDIDATE) {
+    role = profileType.CANDIDATE;
+  } else if (profileInfo?.role === profileType.RECRUITER) {
+    role = profileType.RECRUITER;
+  }
+  const applyForJob = useApplyForNewJob();
 
-  if (isLoading || isLoadingProfile || !isLoaded) {
+  const applicationResults =
+    role === profileType.CANDIDATE
+      ? useGetApplicationsForCandidate(user?.id)
+      : useGetApplicationsForRecruiter(job?.recruiterId);
+
+  const { data: applicationListing, isLoading: isLoadingApplications } =
+    applicationResults;
+
+  if (isLoadingJob || isLoadingProfile || !isLoaded) {
     return (
       <div className="flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-slate-500 mt-32" />
@@ -26,6 +44,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
     );
   }
   const {
+    _id,
     companyName,
     title,
     location,
@@ -37,6 +56,8 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
 
   const skillsList = skills.split(",");
 
+  console.log(applicationListing);
+
   const handleJobApply = () => {
     const application: JobApplicationType = {
       recruiterId: job.recruiterId,
@@ -44,10 +65,11 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
       email: profileInfo.email,
       candidateUserId: profileInfo.userId,
       status: [applicationStatus.APPLIED],
-      jobId: job._id,
+      jobId: _id.toString(),
     };
 
     applyForJob.mutate(application);
+    router.push("/jobs");
   };
 
   return (
@@ -73,7 +95,18 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
         </div>
       </div>
       <div className="py-4">
-        <Button onClick={handleJobApply}>Apply</Button>
+        <Button
+          disabled={
+            applicationListing?.findIndex(
+              (item: JobApplicationType) => item?.jobId === job?._id
+            ) > -1
+              ? true
+              : false
+          }
+          onClick={handleJobApply}
+        >
+          Apply
+        </Button>
       </div>
       <div className="grid gap-4">
         <h4 className="text-xl font-semibold">About the Job</h4>

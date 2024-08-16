@@ -110,4 +110,6 @@ export type JobApplicationType = {
   candidateUserId: string;
   status: string[];
   jobId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
