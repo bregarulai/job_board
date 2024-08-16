@@ -33,7 +33,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
         <h3 className="text-3xl font-semibold">{title}</h3>
 
         <p className="text-muted-foreground text-sm">{location}</p>
-        <p>{type}</p>
+        <p className="text-sm">{type}</p>
         <div>
           <p className="text-lg font-medium">Required skills</p>
           <div className="flex items-center  gap-2 py-2">
@@ -42,7 +42,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
                 key={skill}
                 className="bg-slate-100 rounded-lg px-2 py-1 text-sm"
               >
-                <p className="text-sm">{skill}</p>
+                <h3 className="text-sm">{skill}</h3>
               </div>
             ))}
           </div>
@@ -57,7 +57,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
       </div>
       <div className="grid gap-4 mt-4">
         <h5 className="text-xl font-semibold">Required experience</h5>
-        <p className="text-slate-600">{`Must have ${experience} years of experience`}</p>
+        <p>{`Must have ${experience} years of experience`}</p>
       </div>
     </div>
   );

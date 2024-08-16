@@ -102,3 +102,11 @@ export type RecruiterJobCardProps = {
 export type ParamsProps = {
   params: { id: string };
 };
+
+export type JobApplicationType = {
+  recruiterId: string;
+  name: string;
+  email: string;
+  candidateUserId: string;
+  status: string[];
+};

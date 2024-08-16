@@ -32,89 +32,92 @@ export interface IProfile extends Document {
   };
 }
 
-const ProfileSchema = new Schema({
-  userId: {
-    type: String,
-  },
-  role: {
-    type: String,
-  },
-  email: {
-    type: String,
+const ProfileSchema = new Schema(
+  {
+    userId: {
+      type: String,
+    },
+    role: {
+      type: String,
+    },
+    email: {
+      type: String,
 
-    unique: true,
+      unique: true,
+    },
+    isPremiumUser: {
+      type: Boolean,
+    },
+    membershipType: {
+      type: String,
+    },
+    memebershipStartDate: {
+      type: String,
+    },
+    membershipEndDate: {
+      type: String,
+    },
+    recruiterInfo: {
+      name: {
+        type: String,
+      },
+      companyName: {
+        type: String,
+      },
+      companyRole: {
+        type: String,
+      },
+    },
+    candidateInfo: {
+      name: {
+        type: String,
+      },
+      currentJobLoacation: {
+        type: String,
+      },
+      preferedJobLocation: {
+        type: String,
+      },
+      currentSalary: {
+        type: String,
+      },
+      currentCompany: {
+        type: String,
+      },
+      noticePeriod: {
+        type: String,
+      },
+      skills: {
+        type: String,
+      },
+      previousCompanies: {
+        type: String,
+      },
+      totalExperience: {
+        type: Number,
+      },
+      college: {
+        type: String,
+      },
+      collageLocation: {
+        type: String,
+      },
+      gaduatedYear: {
+        type: String,
+      },
+      linkedinProfile: {
+        type: String,
+      },
+      githubProfile: {
+        type: String,
+      },
+      resume: {
+        type: String,
+      },
+    },
   },
-  isPremiumUser: {
-    type: Boolean,
-  },
-  membershipType: {
-    type: String,
-  },
-  memebershipStartDate: {
-    type: String,
-  },
-  membershipEndDate: {
-    type: String,
-  },
-  recruiterInfo: {
-    name: {
-      type: String,
-    },
-    companyName: {
-      type: String,
-    },
-    companyRole: {
-      type: String,
-    },
-  },
-  candidateInfo: {
-    name: {
-      type: String,
-    },
-    currentJobLoacation: {
-      type: String,
-    },
-    preferedJobLocation: {
-      type: String,
-    },
-    currentSalary: {
-      type: String,
-    },
-    currentCompany: {
-      type: String,
-    },
-    noticePeriod: {
-      type: String,
-    },
-    skills: {
-      type: String,
-    },
-    previousCompanies: {
-      type: String,
-    },
-    totalExperience: {
-      type: Number,
-    },
-    college: {
-      type: String,
-    },
-    collageLocation: {
-      type: String,
-    },
-    gaduatedYear: {
-      type: String,
-    },
-    linkedinProfile: {
-      type: String,
-    },
-    githubProfile: {
-      type: String,
-    },
-    resume: {
-      type: String,
-    },
-  },
-});
+  { timestamps: true }
+);
 
 const Profile = models.Profile || model("Profile", ProfileSchema);
 export default Profile;

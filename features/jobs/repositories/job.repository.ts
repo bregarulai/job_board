@@ -1,8 +1,9 @@
 "use server";
 
 import { connectToDatabase } from "@/database";
+import Application from "@/models/application";
 import Job from "@/models/job";
-import { JobSubmitData } from "@/types";
+import { JobApplicationType, JobSubmitData } from "@/types";
 
 export const addJob = async (job: JobSubmitData) => {
   try {
@@ -44,5 +45,39 @@ export const getJobById = async (id: string) => {
     return results;
   } catch (error) {
     console.error(`Error getting job by id: ${error}`);
+  }
+};
+
+export const addJobApplication = async (application: JobApplicationType) => {
+  try {
+    await connectToDatabase();
+    const results = await Application.create(application);
+    return results;
+  } catch (error) {
+    console.error(`Error adding job application: ${error}`);
+  }
+};
+
+export const getJobApplicationsForCandidate = async (candidateId: string) => {
+  try {
+    await connectToDatabase();
+    const results = await Application.find({
+      candidateUserId: candidateId,
+    });
+    return results;
+  } catch (error) {
+    console.error(`Error getting job applications for candidate: ${error}`);
+  }
+};
+
+export const getJobApplicationsForRrecruiter = async (recruiterId: string) => {
+  try {
+    await connectToDatabase();
+    const results = await Application.find({
+      recruiterId,
+    });
+    return results;
+  } catch (error) {
+    console.error(`Error getting job applications for recruiter: ${error}`);
   }
 };
