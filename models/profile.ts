@@ -12,6 +12,7 @@ export interface IProfile extends Document {
     name: string;
     companyName: string;
     companyRole: string;
+    jobsPosted: string[];
   };
   candidateInfo?: {
     name: string;
@@ -67,6 +68,12 @@ const ProfileSchema = new Schema(
       companyRole: {
         type: String,
       },
+      jobsPosted: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Job",
+        },
+      ],
     },
     candidateInfo: {
       name: {

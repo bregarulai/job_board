@@ -31,6 +31,7 @@ export type RecruiterSubmitData = {
     name: string;
     companyName: string;
     companyRole: string;
+    jobsPosted: string[];
   };
   candidateInfo?: {
     resume: string;

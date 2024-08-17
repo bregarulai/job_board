@@ -35,7 +35,7 @@ const PostNewJobForm = () => {
   async function onSubmit(values: z.infer<typeof postNewJobFormSchema>) {
     const data = {
       ...values,
-      recruiterId: user?.id,
+      recruiterId: profile?._id,
       applicants: [],
     };
     newJobMutation.mutate(data);

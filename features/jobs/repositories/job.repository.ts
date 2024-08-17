@@ -3,15 +3,29 @@
 import { connectToDatabase } from "@/database";
 import Application from "@/models/application";
 import Job from "@/models/job";
+import Profile from "@/models/profile";
 import { JobApplicationType, JobSubmitData } from "@/types";
 
 export const addJob = async (job: JobSubmitData) => {
   try {
     await connectToDatabase();
-    const results = await Job.create({
+    const newJob = await Job.create({
       ...job,
       experience: Number(job.experience),
     });
+
+    console.log("New job", newJob);
+    console.log("Job", job);
+
+    const results = await Profile.findByIdAndUpdate(
+      { _id: job.recruiterId },
+      {
+        $push: { "recruiterInfo.jobsPosted": job.recruiterId },
+      },
+      { new: true, useFindAndModify: false }
+    );
+
+    console.log("Results: ", results);
     return results;
   } catch (error) {
     console.error(`Error adding job: ${error}`);

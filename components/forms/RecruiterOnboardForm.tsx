@@ -31,8 +31,10 @@ const RecruiterOnboardForm = () => {
       role: profileType.RECRUITER,
       email: user?.emailAddresses[0].emailAddress,
       isPremiumUser: false,
-      recruiterInfo: values,
+      recruiterInfo: { ...values, jobsPosted: [] },
     };
+
+    console.log(data);
 
     createProfileMutation.mutate(data);
     form.reset();

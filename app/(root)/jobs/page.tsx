@@ -12,7 +12,7 @@ const JobsPage = async () => {
     <div>
       <JobListing
         role={profileInfo?.role}
-        recruiterId={user?.id}
+        recruiterId={profileInfo?._id}
         userId={user?.id}
       />
     </div>
