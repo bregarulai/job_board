@@ -34,7 +34,7 @@ export type RecruiterSubmitData = {
     jobsPosted: string[];
   };
   candidateInfo?: {
-    resume: string;
+    resume: string | undefined;
     name: string;
     currentCompany: string;
     currentJobLoacation: string;

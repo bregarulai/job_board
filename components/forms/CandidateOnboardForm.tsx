@@ -12,18 +12,13 @@ import CustomFormField from "@/components/shared/CustomFormField";
 import { formFieldType, profileType } from "@/constants";
 import { useUser } from "@clerk/nextjs";
 import { useCreateProfile } from "@/features/onboard/api/useCreateProfile";
-import { createClient } from "@supabase/supabase-js";
+import supabase from "@/lib/supabase/client";
 
 const CandidateOnboardForm = () => {
-  const supabaseClient = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
   const { isLoaded, user } = useUser();
   const createProfileMutation = useCreateProfile();
 
   const [file, setFile] = useState<File | null>(null);
-  const [filePath, setFilePath] = useState<string>("");
 
   const form = useForm<z.infer<typeof candidateOnboardFormSchema>>({
     resolver: zodResolver(candidateOnboardFormSchema),
@@ -53,8 +48,8 @@ const CandidateOnboardForm = () => {
   };
 
   const handleUploadPdfToSupabase = async (file: File) => {
-    const { data, error } = await supabaseClient.storage
-      .from("job-board")
+    const { data, error } = await supabase()
+      .storage.from("job-board")
       .upload(`/public/${file.name}`, file, {
         cacheControl: "3600",
         contentType: file.type,
@@ -67,12 +62,12 @@ const CandidateOnboardForm = () => {
     }
 
     if (data) {
-      setFilePath(data.path);
+      return data.path;
     }
   };
 
   async function onSubmit(values: z.infer<typeof candidateOnboardFormSchema>) {
-    await handleUploadPdfToSupabase(file!);
+    const filePath = await handleUploadPdfToSupabase(file!);
     const candidateInfo = {
       ...values,
       resume: filePath,
@@ -85,10 +80,9 @@ const CandidateOnboardForm = () => {
       isPremiumUser: false,
       candidateInfo: candidateInfo,
     };
-    console.log(data);
 
-    // createProfileMutation.mutate(data);
-    // form.reset();
+    createProfileMutation.mutate(data);
+    form.reset();
   }
 
   return (
