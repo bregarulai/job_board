@@ -16,7 +16,18 @@ const JobApplicants = ({ jobId }: { jobId: string }) => {
     );
   }
   return (
-    <div>
+    <div className="grid gap-4 mt-4">
+      <div className="grid gap-2">
+        <h2 className="text-lg font-normal text-gray-900">
+          {data.companyName}
+        </h2>
+        <h3 className="text-2xl font-semibold text-gray-800">{data.title}</h3>
+        <div className="flex items-center gap-2">
+          <p className="text-sm text-muted-foreground">{data.location}</p>
+          <div className="size-1 bg-slate-400 rounded-full" />
+          <p className="text-sm text-muted-foreground">{data.type}</p>
+        </div>
+      </div>
       <ApplicantDataTable data={data.applicants} columns={applicantColumns} />
     </div>
   );
