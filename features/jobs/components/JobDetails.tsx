@@ -2,7 +2,8 @@
 
 import { Loader2 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
-import { redirect, useRouter } from "next/navigation";
+
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useGetJob } from "@/features/jobs/api/useGetJob";
@@ -14,7 +15,6 @@ import { useGetApplicationsForCandidate } from "../api/useGetApplicationsForCand
 import { useGetApplicationsForRecruiter } from "../api/useGetApplicationsForRecruiter";
 
 const JobDetails = ({ jobId }: { jobId: string }) => {
-  const router = useRouter();
   const { data: job, isLoading: isLoadingJob } = useGetJob(jobId);
   const { user, isLoaded } = useUser();
   const { data: profileInfo, isLoading: isLoadingProfile } = useGetProfile(
@@ -30,7 +30,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
 
   const applicationResults =
     role === profileType.CANDIDATE
-      ? useGetApplicationsForCandidate(user?.id)
+      ? useGetApplicationsForCandidate(profileInfo?._id)
       : useGetApplicationsForRecruiter(job?.recruiterId);
 
   const { data: applicationListing, isLoading: isLoadingApplications } =
@@ -61,13 +61,13 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
       recruiterId: job.recruiterId,
       name: profileInfo.candidateInfo.name,
       email: profileInfo.email,
-      candidateUserId: profileInfo.userId,
+      candidateUserId: profileInfo._id,
       status: [applicationStatus.APPLIED],
       jobId: _id.toString(),
     };
 
     applyForJob.mutate(application);
-    router.push("/jobs");
+    redirect("/jobs");
   };
 
   return (
@@ -104,7 +104,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
           onClick={handleJobApply}
         >
           {applicationListing?.findIndex(
-            (item: JobApplicationType) => item?.jobId === job?._id
+            (item: JobApplicationType) => item?.jobId === job?._id.toString()
           ) > -1
             ? "Applied"
             : "Apply"}

@@ -21,6 +21,7 @@ const JobListing = ({
   recruiterId: string | undefined;
   userId: string | undefined;
 }) => {
+  console.log(recruiterId);
   const jobResults =
     role === profileType.CANDIDATE
       ? useGetJobsForCandidate()
@@ -35,6 +36,7 @@ const JobListing = ({
     applicationResults;
 
   const { data: jobListing, isLoading: isLoadingJobs } = jobResults;
+  console.log(jobListing);
 
   if (isLoadingJobs || isLoadingApplications) {
     return (

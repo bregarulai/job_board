@@ -99,7 +99,14 @@ export const getJobApplicationsForRecruiter = async (
 
     const results = await Job.findById({
       _id: jobId,
-    }).populate("applicants", "-updatedAt");
+    }).populate({
+      path: "applicants",
+      populate: {
+        path: "candidateUserId",
+        select: "-updatedAt",
+      },
+      select: "-updatedAt",
+    });
 
     return results;
   } catch (error) {

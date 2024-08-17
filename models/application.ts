@@ -8,7 +8,12 @@ const ApplicationSchema = new Schema(
     },
     name: String,
     email: String,
-    candidateUserId: String,
+    candidateUserId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Profile",
+      },
+    ],
     status: Array,
     jobId: {
       type: Schema.Types.ObjectId,
