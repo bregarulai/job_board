@@ -12,14 +12,14 @@ const RecruiterJobCard = ({ job }: RecruiterJobCardProps) => {
         description={job.description}
         footerContent={
           <div>
-            <p className="text-sm text-muted-foreground mb-4">
+            <Button>
+              {" "}
               {job.applicants.length > 0
                 ? job.applicants.length === 1
-                  ? `${job.applicants.length} candidate has applied for this job`
-                  : `${job.applicants.length} candidates have applied for this job`
-                : "0 candidate have applied for this job"}
-            </p>
-            <Button>Apply</Button>
+                  ? `${job.applicants.length} Applicant`
+                  : `${job.applicants.length} Applicants`
+                : "0 Applicant"}
+            </Button>
           </div>
         }
       />

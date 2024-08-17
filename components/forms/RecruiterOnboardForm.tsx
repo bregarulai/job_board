@@ -34,8 +34,6 @@ const RecruiterOnboardForm = () => {
       recruiterInfo: { ...values, jobsPosted: [] },
     };
 
-    console.log(data);
-
     createProfileMutation.mutate(data);
     form.reset();
   }

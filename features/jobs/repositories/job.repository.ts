@@ -14,9 +14,6 @@ export const addJob = async (job: JobSubmitData) => {
       experience: Number(job.experience),
     });
 
-    console.log("New job", newJob);
-    console.log("Job", job);
-
     const results = await Profile.findByIdAndUpdate(
       { _id: job.recruiterId },
       {
@@ -25,7 +22,6 @@ export const addJob = async (job: JobSubmitData) => {
       { new: true, useFindAndModify: false }
     );
 
-    console.log("Results: ", results);
     return results;
   } catch (error) {
     console.error(`Error adding job: ${error}`);
