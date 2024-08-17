@@ -9,7 +9,7 @@ import { JobApplicationType, JobSubmitData } from "@/types";
 export const addJob = async (job: JobSubmitData) => {
   try {
     await connectToDatabase();
-    const newJob = await Job.create({
+    await Job.create({
       ...job,
       experience: Number(job.experience),
     });

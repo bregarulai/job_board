@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { RecruiterJobCardProps } from "@/types";
 import JobIcon from "@/components/JobIcon";
 import { Button } from "@/components/ui/button";
@@ -12,13 +14,14 @@ const RecruiterJobCard = ({ job }: RecruiterJobCardProps) => {
         description={job.description}
         footerContent={
           <div>
-            <Button>
-              {" "}
-              {job.applicants.length > 0
-                ? job.applicants.length === 1
-                  ? `${job.applicants.length} Applicant`
-                  : `${job.applicants.length} Applicants`
-                : "0 Applicant"}
+            <Button asChild>
+              <Link href={`/jobs/${job._id}/candidates`}>
+                {job.applicants.length > 0
+                  ? job.applicants.length === 1
+                    ? `${job.applicants.length} Applicant`
+                    : `${job.applicants.length} Applicants`
+                  : "0 Applicant"}
+              </Link>
             </Button>
           </div>
         }
