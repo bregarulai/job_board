@@ -114,3 +114,16 @@ export type JobApplicationType = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type ApplicantStatusType =
+  | "Pending"
+  | "Accepted"
+  | "Rejected"
+  | "Applied";
+
+export type ApplicantColumnType = {
+  id: string;
+  name: string;
+  status: ApplicantStatusType;
+  email: string;
+};

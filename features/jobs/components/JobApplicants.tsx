@@ -7,7 +7,7 @@ import { candidateTableData } from "@/data/candidateTableData";
 import { applicantColumns } from "@/features/jobs/components/applicants/applicantColumns";
 
 const JobApplicants = ({ jobId }: { jobId: string }) => {
-  const { data: applicants, isLoading } = useGetApplicationsForRecruiter(jobId);
+  const { data, isLoading } = useGetApplicationsForRecruiter(jobId);
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center mt-36">
@@ -17,10 +17,7 @@ const JobApplicants = ({ jobId }: { jobId: string }) => {
   }
   return (
     <div>
-      <ApplicantDataTable
-        data={candidateTableData}
-        columns={applicantColumns}
-      />
+      <ApplicantDataTable data={data.applicants} columns={applicantColumns} />
     </div>
   );
 };

@@ -1,21 +1,16 @@
-type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
+import { ApplicantColumnType } from "@/types";
 
-export const candidateTableData: Payment[] = [
+export const candidateTableData: ApplicantColumnType[] = [
   {
     id: "728ed52f",
-    amount: 100,
-    status: "pending",
+    name: "Juan de lo Palote",
+    status: "Rejected",
     email: "m@example.com",
   },
   {
     id: "489e1d42",
-    amount: 125,
-    status: "processing",
+    name: "wow que trucho toi",
+    status: "Applied",
     email: "example@gmail.com",
   },
   // ...
