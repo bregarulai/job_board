@@ -7,7 +7,10 @@ const ApplicationSchema = new Schema(
     email: String,
     candidateUserId: String,
     status: Array,
-    jobId: String,
+    jobId: {
+      type: Schema.Types.ObjectId,
+      ref: "Job",
+    },
   },
   { timestamps: true }
 );

@@ -51,7 +51,16 @@ export const getJobById = async (id: string) => {
 export const addJobApplication = async (application: JobApplicationType) => {
   try {
     await connectToDatabase();
-    const results = await Application.create(application);
+    const applicationResult = await Application.create(application);
+
+    const results = await Job.findByIdAndUpdate(
+      application.jobId,
+      {
+        $push: { applicants: applicationResult._id },
+      },
+      { new: true, useFindAndModify: false }
+    );
+
     return results;
   } catch (error) {
     console.error(`Error adding job application: ${error}`);

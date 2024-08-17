@@ -12,10 +12,8 @@ const JobSchema = new Schema(
     type: String,
     applicants: [
       {
-        name: String,
-        email: String,
-        userId: String,
-        status: String,
+        type: Schema.Types.ObjectId,
+        ref: "Application",
       },
     ],
   },
