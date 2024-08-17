@@ -5,7 +5,11 @@ import { fetchProfileAction } from "@/features/onboard/actions/profile.action";
 
 const CommonLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser();
-  const profileInfo = await fetchProfileAction(user?.id);
+  let profileInfo;
+
+  if (user) {
+    profileInfo = await fetchProfileAction(user.id);
+  }
   return (
     <div className="mx-auto max-w-7xl py-6 lg:px-8 ">
       <Header userId={user?.id} role={profileInfo?.role} />

@@ -5,7 +5,11 @@ import { redirect } from "next/navigation";
 const HomePage = async () => {
   const user = await currentUser();
 
-  const profileInfo = await fetchProfileAction(user?.id);
+  let profileInfo;
+
+  if (user) {
+    profileInfo = await fetchProfileAction(user.id);
+  }
 
   if (user && !profileInfo?._id) redirect("/onboard");
 

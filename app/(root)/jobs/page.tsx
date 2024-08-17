@@ -6,7 +6,11 @@ import JobListing from "@/features/jobs/components/JobListing";
 const JobsPage = async () => {
   const user = await currentUser();
 
-  const profileInfo = await fetchProfileAction(user?.id);
+  let profileInfo;
+
+  if (user) {
+    profileInfo = await fetchProfileAction(user.id);
+  }
 
   return (
     <div>

@@ -85,9 +85,10 @@ const CandidateOnboardForm = () => {
       isPremiumUser: false,
       candidateInfo: candidateInfo,
     };
+    console.log(data);
 
-    createProfileMutation.mutate(data);
-    form.reset();
+    // createProfileMutation.mutate(data);
+    // form.reset();
   }
 
   return (
