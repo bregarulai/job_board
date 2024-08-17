@@ -91,14 +91,16 @@ export const getJobApplicationsForCandidate = async (
   }
 };
 
-export const getJobApplicationsForRrecruiter = async (
-  recruiterId: string | undefined
+export const getJobApplicationsForRecruiter = async (
+  jobId: string | undefined
 ) => {
   try {
     await connectToDatabase();
-    const results = await Application.find({
-      recruiterId,
-    });
+
+    const results = await Job.findById({
+      _id: jobId,
+    }).populate("applicants", "-updatedAt");
+
     return results;
   } catch (error) {
     console.error(`Error getting job applications for recruiter: ${error}`);

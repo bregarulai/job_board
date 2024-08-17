@@ -7,7 +7,7 @@ import {
   addJob,
   addJobApplication,
   getJobApplicationsForCandidate,
-  getJobApplicationsForRrecruiter,
+  getJobApplicationsForRecruiter,
   getJobById,
   getJobsForCandidate,
   getJobsForRecruiter,
@@ -79,11 +79,11 @@ export const fetchJobApplicationsForCandidateAction = async (
 };
 
 export const fetchJobApplicationsForRecruiterAction = async (
-  recruiterId: string | undefined
+  jobId: string | undefined
 ) => {
   try {
-    const jobApplications = await getJobApplicationsForRrecruiter(recruiterId);
-    return parseStringify(jobApplications);
+    const applicants = await getJobApplicationsForRecruiter(jobId);
+    return parseStringify(applicants);
   } catch (error) {
     console.error(
       `Error while fetching job applications for recruiter: ${error}`
