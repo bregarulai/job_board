@@ -56,8 +56,6 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
 
   const skillsList = skills.split(",");
 
-  console.log(applicationListing);
-
   const handleJobApply = () => {
     const application: JobApplicationType = {
       recruiterId: job.recruiterId,
@@ -105,7 +103,11 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
           }
           onClick={handleJobApply}
         >
-          Apply
+          {applicationListing?.findIndex(
+            (item: JobApplicationType) => item?.jobId === job?._id
+          ) > -1
+            ? "Applied"
+            : "Apply"}
         </Button>
       </div>
       <div className="grid gap-4">

@@ -53,7 +53,6 @@ const CandidateOnboardForm = () => {
   };
 
   const handleUploadPdfToSupabase = async (file: File) => {
-    console.log("Entered handleUploadPdfToSupabase");
     const { data, error } = await supabaseClient.storage
       .from("job-board")
       .upload(`/public/${file.name}`, file, {
@@ -61,8 +60,7 @@ const CandidateOnboardForm = () => {
         contentType: file.type,
         upsert: false,
       });
-    console.log("File data: ", data);
-    console.log("File error: ", error);
+
     if (error) {
       console.error(`There was an error uploading the file: ${error.message}`);
       return;
@@ -74,7 +72,6 @@ const CandidateOnboardForm = () => {
   };
 
   async function onSubmit(values: z.infer<typeof candidateOnboardFormSchema>) {
-    console.log(values);
     await handleUploadPdfToSupabase(file!);
     const candidateInfo = {
       ...values,

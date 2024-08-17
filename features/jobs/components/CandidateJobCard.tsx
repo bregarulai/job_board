@@ -12,7 +12,7 @@ const CandidateJobCard = ({ job }: CandidateJobCardProps) => {
         description={job.companyName}
         icon={<JobIcon />}
         footerContent={
-          <Button>
+          <Button asChild>
             <Link href={`/jobs/${job._id}`}>View Details</Link>
           </Button>
         }

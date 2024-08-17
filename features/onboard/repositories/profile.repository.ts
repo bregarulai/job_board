@@ -5,7 +5,6 @@ import Profile from "@/models/profile";
 import { RecruiterSubmitData } from "@/types";
 
 export const addProfile = async (profile: RecruiterSubmitData) => {
-  console.log("Profile: ", profile);
   try {
     await connectToDatabase();
     const results = await Profile.create({
