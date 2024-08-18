@@ -8,11 +8,9 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useGetJob } from "@/features/jobs/api/useGetJob";
 import { useGetProfile } from "@/features/onboard/api/useGetProfile";
-import { applicationStatus, profileType } from "@/constants";
+import { applicationStatus } from "@/constants";
 import { JobApplicationType } from "@/types";
 import { useApplyForNewJob } from "@/features/jobs/api/useApplyForNewJob";
-import { useGetApplicationsForCandidate } from "../../activities/api/useGetApplicationsForCandidate";
-import { useGetApplicationsForRecruiter } from "../api/useGetApplicationsForRecruiter";
 
 const JobDetails = ({ jobId }: { jobId: string }) => {
   const { data: job, isLoading: isLoadingJob } = useGetJob(jobId);
@@ -20,21 +18,8 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
   const { data: profileInfo, isLoading: isLoadingProfile } = useGetProfile(
     user?.id
   );
-  let role;
-  if (profileInfo?.role === profileType.CANDIDATE) {
-    role = profileType.CANDIDATE;
-  } else if (profileInfo?.role === profileType.RECRUITER) {
-    role = profileType.RECRUITER;
-  }
+
   const applyForJob = useApplyForNewJob();
-
-  const applicationResults =
-    role === profileType.CANDIDATE
-      ? useGetApplicationsForCandidate(profileInfo?._id)
-      : useGetApplicationsForRecruiter(job?.recruiterId);
-
-  const { data: applicationListing, isLoading: isLoadingApplications } =
-    applicationResults;
 
   if (isLoadingJob || isLoadingProfile || !isLoaded) {
     return (
@@ -70,6 +55,10 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
     redirect("/jobs");
   };
 
+  const disableApplyButton = job.applicants.map((applicant: any) =>
+    applicant.candidateUserId.includes(profileInfo._id)
+  );
+
   return (
     <div className="pt-6 pb-24">
       <div className="grid gap-4">
@@ -93,21 +82,8 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
         </div>
       </div>
       <div className="py-4">
-        <Button
-          disabled={
-            applicationListing?.findIndex(
-              (item: JobApplicationType) => item?.jobId === job?._id
-            ) > -1
-              ? true
-              : false
-          }
-          onClick={handleJobApply}
-        >
-          {applicationListing?.findIndex(
-            (item: JobApplicationType) => item?.jobId === job?._id.toString()
-          ) > -1
-            ? "Applied"
-            : "Apply"}
+        <Button disabled={disableApplyButton[0]} onClick={handleJobApply}>
+          {disableApplyButton[0] ? "Applied" : "Apply"}
         </Button>
       </div>
       <div className="grid gap-4">

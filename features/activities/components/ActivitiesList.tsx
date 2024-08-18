@@ -31,7 +31,7 @@ const ActivitiesList = ({
       company: application.jobId.companyName,
       location: application.jobId.location,
       applicants: application.jobId.applicants.length,
-      recruiter: application.recruiterId.recruiterInfo.name,
+      recruiter: application.recruiterId?.recruiterInfo.name,
       postedDate: Intl.DateTimeFormat("en-us").format(
         new Date(application.createdAt)
       ),
@@ -40,6 +40,8 @@ const ActivitiesList = ({
     };
     return data;
   });
+
+  console.log("applicationTableData", applications);
 
   return (
     <div>

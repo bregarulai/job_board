@@ -55,7 +55,7 @@ export const getJobsForCandidate = async () => {
 export const getJobById = async (id: string) => {
   try {
     await connectToDatabase();
-    const results = await Job.findById(id);
+    const results = await Job.findById(id).populate("applicants");
     return results;
   } catch (error) {
     console.error(`Error getting job by id: ${error}`);
