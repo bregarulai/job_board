@@ -120,3 +120,13 @@ export const updaJobApplication = async ({
     console.error(`Error updating job application: ${error}`);
   }
 };
+
+export const getFilterCategories = async () => {
+  try {
+    await connectToDatabase();
+    const results = await Job.find({});
+    return results;
+  } catch (error) {
+    console.error(`Error getting filter categories: ${error}`);
+  }
+};

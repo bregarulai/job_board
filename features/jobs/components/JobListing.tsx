@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 
-import { profileType } from "@/constants";
+import { filterMenuOptions, profileType } from "@/constants";
 import PostNewJob from "@/features/jobs/components/PostNewJob";
 import { useGetJobsForRecruiter } from "@/features/jobs/api/useGetJobsForRecruiter";
 import RecruiterJobCard from "@/features/jobs/components/RecruiderJobCard";
@@ -11,6 +11,7 @@ import { useGetJobsForCandidate } from "@/features/jobs/api/useGetJobsForCandida
 import CandidateJobCard from "@/features/jobs/components/CandidateJobCard";
 import { useGetApplicationsForCandidate } from "@/features/activities/api/useGetApplicationsForCandidate";
 import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
+import { useGetFilterCategories } from "../api/useGetFilterCategories";
 
 const JobListing = ({
   role,
@@ -43,6 +44,19 @@ const JobListing = ({
       </div>
     );
   }
+
+  const { data: filterCategories } = useGetFilterCategories();
+
+  const filterMenus = filterMenuOptions.map((option) => ({
+    id: option.id,
+    name: option.label,
+    options: [
+      // Map over each category in the filterCategories array to extract the value corresponding to option.id
+      ...new Set(filterCategories.map((category: any) => category[option.id])),
+    ],
+  }));
+
+  console.log("filterMenus", filterMenus);
 
   return (
     <div>

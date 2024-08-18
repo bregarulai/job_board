@@ -1,5 +1,3 @@
-import { Control } from "react-hook-form";
-
 export enum formFieldType {
   INPUT = "input",
   FILE = "file",
@@ -18,6 +16,7 @@ export enum queryKeys {
   APPLICATIONS_FOR_RECRUITER = "applicationsForRecruiter",
   APPLICATIONS_FOR_CANDIDATE = "applicationsForCandidate",
   APPLICATION = "application",
+  FILTER_CATEGORIES = "filterCategories",
 }
 
 export enum applicationStatus {
@@ -27,3 +26,10 @@ export enum applicationStatus {
   APPLIED = "Applied",
   SELECTED = "Selected",
 }
+
+export const filterMenuOptions = [
+  { id: "companyName", label: "Company Name" },
+  { id: "title", label: "Job Title" },
+  { id: "location", label: "Location" },
+  { id: "type", label: "Type" },
+];

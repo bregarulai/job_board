@@ -6,6 +6,7 @@ import { parseStringify } from "@/lib/utils";
 import {
   addJob,
   addJobApplication,
+  getFilterCategories,
   getJobApplicationsForRecruiter,
   getJobById,
   getJobsForCandidate,
@@ -95,5 +96,14 @@ export const updateJobApplicationAction = async ({
     return parseStringify(jobApplication);
   } catch (error) {
     console.error(`Error while updating job application: ${error}`);
+  }
+};
+
+export const fetchFilterCategoriesAction = async () => {
+  try {
+    const categories = await getFilterCategories();
+    return parseStringify(categories);
+  } catch (error) {
+    console.error(`Error while fetching filter categories: ${error}`);
   }
 };
