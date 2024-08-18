@@ -1,7 +1,8 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { filterMenuOptions, profileType } from "@/constants";
 import PostNewJob from "@/features/jobs/components/PostNewJob";
@@ -13,7 +14,6 @@ import CandidateJobCard from "@/features/jobs/components/CandidateJobCard";
 import { useGetApplicationsForCandidate } from "@/features/activities/api/useGetApplicationsForCandidate";
 import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
 import { useGetFilterCategories } from "@/features/jobs/api/useGetFilterCategories";
-
 import {
   Menubar,
   MenubarContent,
@@ -22,7 +22,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { cn, formUrlQuery } from "@/lib/utils";
 
 const JobListing = ({
   role,
@@ -34,6 +34,8 @@ const JobListing = ({
   userId: string | undefined;
 }) => {
   const [filterParams, setFilterParams] = useState<any>({});
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const jobResults =
     role === profileType.CANDIDATE
@@ -45,6 +47,21 @@ const JobListing = ({
     role === profileType.CANDIDATE
       ? useGetApplicationsForCandidate(userId)
       : useGetApplicationsForRecruiter(recruiterId);
+
+  useEffect(() => {
+    setFilterParams(JSON.parse(sessionStorage.getItem("filterParams") || "{}"));
+  }, []);
+
+  useEffect(() => {
+    if (filterParams && Object.keys(filterParams).length > 0) {
+      let url = "";
+      url = formUrlQuery({
+        params: searchParams.toString(),
+        dataToAdd: filterParams,
+      });
+      router.push(url, { scroll: false });
+    }
+  }, [filterParams, searchParams]);
 
   const { data: ApplicationListing, isLoading: isLoadingApplications } =
     applicationResults;
@@ -60,15 +77,6 @@ const JobListing = ({
       </div>
     );
   }
-
-  const filterMenus = filterMenuOptions?.map((option) => ({
-    id: option.id,
-    name: option.label,
-    options: [
-      // Map over each category in the filterCategories array to extract the value corresponding to option.id
-      ...new Set(filterCategories.map((category: any) => category[option.id])),
-    ],
-  }));
 
   const handleFilter = (id: string, option: string) => {
     let copyFilterParams = { ...filterParams };
@@ -90,6 +98,15 @@ const JobListing = ({
     setFilterParams(copyFilterParams);
     sessionStorage.setItem("filterParams", JSON.stringify(copyFilterParams));
   };
+
+  const filterMenus = filterMenuOptions?.map((option) => ({
+    id: option.id,
+    name: option.label,
+    options: [
+      // Map over each category in the filterCategories array to extract the value corresponding to option.id
+      ...new Set(filterCategories.map((category: any) => category[option.id])),
+    ],
+  }));
 
   return (
     <div>
