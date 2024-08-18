@@ -89,9 +89,7 @@ const JobListing = ({
     }
     setFilterParams(copyFilterParams);
     sessionStorage.setItem("filterParams", JSON.stringify(copyFilterParams));
-    console.log("copyFilterParams", copyFilterParams);
   };
-  console.log("FilterParams: ", filterParams);
 
   return (
     <div>
@@ -124,7 +122,7 @@ const JobListing = ({
                                 Object.keys(filterParams).length > 0 &&
                                 filterParams[menu.id] &&
                                 filterParams[menu.id].indexOf(option) > -1
-                                ? "bg-indigo-800/40 text-muted-foreground"
+                                ? "bg-blue-800/60 text-muted-foreground"
                                 : ""
                             )}
                           />
