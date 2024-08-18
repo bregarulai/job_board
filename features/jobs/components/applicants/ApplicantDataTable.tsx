@@ -23,10 +23,11 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import supabase from "@/lib/supabase/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data: any[];
 }
 
 export function ApplicantDataTable<TData, TValue>({
@@ -54,6 +55,24 @@ export function ApplicantDataTable<TData, TValue>({
     },
   });
 
+  const handlePreviewResume = async () => {
+    const publicUrl: any =
+      table.getFilteredSelectedRowModel().rows[0].original.candidateUserId[0]
+        .candidateInfo.resume;
+    const { data } = supabase()
+      .storage.from("job-board")
+      .getPublicUrl(publicUrl);
+
+    const a = document.createElement("a");
+    a.href = data.publicUrl;
+    a.setAttribute("download", "Resume.pdf");
+    a.setAttribute("target", "_blank");
+    a.setAttribute("rel", "noopener noreferrer");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -68,11 +87,11 @@ export function ApplicantDataTable<TData, TValue>({
           />
         </div>
         <div>
-          <Button>Preview Resume</Button>
+          <Button onClick={handlePreviewResume}>Preview Resume</Button>
         </div>
         <div>
           <div className="flex gap-4">
-            <Button>Accept</Button>
+            <Button>Select</Button>
             <Button variant="outline">Reject</Button>
           </div>
         </div>
