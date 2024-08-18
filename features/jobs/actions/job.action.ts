@@ -11,8 +11,13 @@ import {
   getJobById,
   getJobsForCandidate,
   getJobsForRecruiter,
+  updaJobApplication,
 } from "@/features/jobs/repositories/job.repository";
-import { JobApplicationType, PostNewJobParams } from "@/types";
+import {
+  JobApplicationType,
+  PostNewJobParams,
+  UpdateJobApplicationParams,
+} from "@/types";
 
 export const postNewJobAction = async ({ job }: PostNewJobParams) => {
   try {
@@ -88,5 +93,21 @@ export const fetchJobApplicationsForRecruiterAction = async (
     console.error(
       `Error while fetching job applications for recruiter: ${error}`
     );
+  }
+};
+
+export const updateJobApplicationAction = async ({
+  applicationId,
+  application,
+}: UpdateJobApplicationParams) => {
+  try {
+    const jobApplication = await updaJobApplication({
+      applicationId,
+      application,
+    });
+    revalidatePath("/jobs");
+    return parseStringify(jobApplication);
+  } catch (error) {
+    console.error(`Error while updating job application: ${error}`);
   }
 };

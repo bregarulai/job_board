@@ -12,6 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { toast } from "sonner";
 
 import {
   Table,
@@ -24,19 +25,28 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import supabase from "@/lib/supabase/client";
+import { applicationStatus } from "@/constants";
+import { ApplicantStatusType, JobApplicationType } from "@/types";
+import { useUpdateApplicationStatus } from "@/features/jobs/api/useUpdateApplication";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: any[];
+  jobId: string;
+  recruiterId: string;
 }
 
 export function ApplicantDataTable<TData, TValue>({
   columns,
   data,
+  jobId,
+  recruiterId,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+
+  const updateStatusMutation = useUpdateApplicationStatus();
 
   const table = useReactTable({
     data,
@@ -56,6 +66,15 @@ export function ApplicantDataTable<TData, TValue>({
   });
 
   const handlePreviewResume = async () => {
+    if (table.getFilteredSelectedRowModel().rows.length === 0) {
+      toast.error("Please select a row");
+      return;
+    }
+
+    if (table.getFilteredSelectedRowModel().rows.length > 1) {
+      toast.error("Please select only one row");
+      return;
+    }
     const publicUrl: any =
       table.getFilteredSelectedRowModel().rows[0].original.candidateUserId[0]
         .candidateInfo.resume;
@@ -71,6 +90,52 @@ export function ApplicantDataTable<TData, TValue>({
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  };
+
+  const handleUpdateJobStatus = async (currentStatus: ApplicantStatusType) => {
+    if (table.getFilteredSelectedRowModel().rows.length === 0) {
+      toast.error("Please select a row");
+      return;
+    }
+
+    if (table.getFilteredSelectedRowModel().rows.length > 1) {
+      toast.error("Please select only one row");
+      return;
+    }
+
+    const selectedRow = table.getFilteredSelectedRowModel().rows[0];
+    const applicationId = selectedRow.original._id;
+    const status = selectedRow.original.status;
+    const applicationInfo = selectedRow.original.candidateUserId[0];
+
+    if (
+      currentStatus === applicationStatus.SELECTED &&
+      status === applicationStatus.SELECTED
+    ) {
+      toast.error("Candidate has already been selected");
+      return;
+    }
+    if (
+      currentStatus === applicationStatus.REJECTED &&
+      status === applicationStatus.REJECTED
+    ) {
+      toast.error("Candidate has already been rejected");
+      return;
+    }
+
+    const applicationData: JobApplicationType = {
+      recruiterId,
+      name: applicationInfo.candidateInfo.name,
+      email: applicationInfo.email,
+      candidateUserId: applicationInfo._id,
+      status: currentStatus,
+      jobId,
+    };
+
+    updateStatusMutation.mutate({
+      applicationId,
+      application: applicationData,
+    });
   };
 
   return (
@@ -91,8 +156,17 @@ export function ApplicantDataTable<TData, TValue>({
         </div>
         <div>
           <div className="flex gap-4">
-            <Button>Select</Button>
-            <Button variant="outline">Reject</Button>
+            <Button
+              onClick={() => handleUpdateJobStatus(applicationStatus.SELECTED)}
+            >
+              Select
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => handleUpdateJobStatus(applicationStatus.REJECTED)}
+            >
+              Reject
+            </Button>
           </div>
         </div>
       </div>

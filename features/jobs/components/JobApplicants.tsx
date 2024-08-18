@@ -2,8 +2,9 @@
 
 import { Loader2 } from "lucide-react";
 import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
-import { ApplicantDataTable } from "@/components/shared/ApplicantDataTable";
+
 import { applicantColumns } from "@/features/jobs/components/applicants/applicantColumns";
+import { ApplicantDataTable } from "@/features/jobs/components/applicants/ApplicantDataTable";
 
 const JobApplicants = ({ jobId }: { jobId: string }) => {
   const { data, isLoading } = useGetApplicationsForRecruiter(jobId);
@@ -27,7 +28,12 @@ const JobApplicants = ({ jobId }: { jobId: string }) => {
           <p className="text-sm text-muted-foreground">{data.type}</p>
         </div>
       </div>
-      <ApplicantDataTable data={data.applicants} columns={applicantColumns} />
+      <ApplicantDataTable
+        jobId={data._id}
+        recruiterId={data.recruiterId}
+        data={data.applicants}
+        columns={applicantColumns}
+      />
     </div>
   );
 };

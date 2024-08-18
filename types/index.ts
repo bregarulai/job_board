@@ -108,7 +108,8 @@ export type ApplicantStatusType =
   | "Pending"
   | "Accepted"
   | "Rejected"
-  | "Applied";
+  | "Applied"
+  | "Selected";
 
 export type JobApplicationType = {
   recruiterId: string;
@@ -155,4 +156,9 @@ export type ApplicantColumnType = {
 export type ApplicantTableActionsProps = {
   candidateInfo: CandidateInfoType;
   id: string;
+};
+
+export type UpdateJobApplicationParams = {
+  applicationId: string;
+  application: JobApplicationType;
 };

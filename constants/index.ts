@@ -25,4 +25,5 @@ export enum applicationStatus {
   ACCEPTED = "Accepted",
   REJECTED = "Rejected",
   APPLIED = "Applied",
+  SELECTED = "Selected",
 }

@@ -4,7 +4,11 @@ import { connectToDatabase } from "@/database";
 import Application from "@/models/application";
 import Job from "@/models/job";
 import Profile from "@/models/profile";
-import { JobApplicationType, JobSubmitData } from "@/types";
+import {
+  JobApplicationType,
+  JobSubmitData,
+  UpdateJobApplicationParams,
+} from "@/types";
 
 export const addJob = async (job: JobSubmitData) => {
   try {
@@ -111,5 +115,22 @@ export const getJobApplicationsForRecruiter = async (
     return results;
   } catch (error) {
     console.error(`Error getting job applications for recruiter: ${error}`);
+  }
+};
+
+export const updaJobApplication = async ({
+  applicationId,
+  application,
+}: UpdateJobApplicationParams) => {
+  try {
+    await connectToDatabase();
+    const results = await Application.findByIdAndUpdate(
+      applicationId,
+      application,
+      { new: true }
+    );
+    return results;
+  } catch (error) {
+    console.error(`Error updating job application: ${error}`);
   }
 };
