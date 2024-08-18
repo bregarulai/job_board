@@ -121,9 +121,38 @@ export type ApplicantStatusType =
   | "Rejected"
   | "Applied";
 
+export type CandidateInfoType = {
+  _id: string;
+  name: string;
+  email: string;
+  currentCompany: string;
+  currentJobLoacation: string;
+  preferredJobLoacation: string;
+  currentSalary: string;
+  noticePeriod: string;
+  skills: string;
+  previousCompanies: string;
+  totalExperience: string;
+  college: string;
+  collegeLocation: string;
+  graduationYear: string;
+  linkedinProfile: string;
+  githubProfile: string;
+};
+
+export type CandidateType = {
+  candidateInfo: CandidateInfoType;
+};
+
 export type ApplicantColumnType = {
   id: string;
   name: string;
   status: ApplicantStatusType;
   email: string;
+  candidateUserId: CandidateType[];
+};
+
+export type ApplicantTableActionsProps = {
+  candidateInfo: CandidateInfoType;
+  id: string;
 };

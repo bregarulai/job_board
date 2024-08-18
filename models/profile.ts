@@ -82,7 +82,7 @@ const ProfileSchema = new Schema(
       currentJobLoacation: {
         type: String,
       },
-      preferedJobLocation: {
+      preferredJobLoacation: {
         type: String,
       },
       currentSalary: {
@@ -106,10 +106,10 @@ const ProfileSchema = new Schema(
       college: {
         type: String,
       },
-      collageLocation: {
+      collegeLocation: {
         type: String,
       },
-      gaduatedYear: {
+      graduationYear: {
         type: String,
       },
       linkedinProfile: {

@@ -103,7 +103,7 @@ export const getJobApplicationsForRecruiter = async (
       path: "applicants",
       populate: {
         path: "candidateUserId",
-        select: "-updatedAt",
+        select: "-updatedAt -recruiterInfo",
       },
       select: "-updatedAt",
     });
