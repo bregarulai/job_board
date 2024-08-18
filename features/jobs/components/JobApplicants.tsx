@@ -2,8 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
-import { ApplicantDataTable } from "./applicants/ApplicantDataTable";
-import { candidateTableData } from "@/data/candidateTableData";
+import { ApplicantDataTable } from "@/components/shared/ApplicantDataTable";
 import { applicantColumns } from "@/features/jobs/components/applicants/applicantColumns";
 
 const JobApplicants = ({ jobId }: { jobId: string }) => {

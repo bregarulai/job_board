@@ -104,22 +104,22 @@ export type ParamsProps = {
   params: { id: string };
 };
 
-export type JobApplicationType = {
-  recruiterId: string;
-  name: string;
-  email: string;
-  candidateUserId: string;
-  status: string[];
-  jobId: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
 export type ApplicantStatusType =
   | "Pending"
   | "Accepted"
   | "Rejected"
   | "Applied";
+
+export type JobApplicationType = {
+  recruiterId: string;
+  name: string;
+  email: string;
+  candidateUserId: string;
+  status: ApplicantStatusType;
+  jobId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
 
 export type CandidateInfoType = {
   _id: string;

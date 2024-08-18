@@ -14,7 +14,7 @@ const ApplicationSchema = new Schema(
         ref: "Profile",
       },
     ],
-    status: Array,
+    status: String,
     jobId: {
       type: Schema.Types.ObjectId,
       ref: "Job",

@@ -62,7 +62,7 @@ const JobDetails = ({ jobId }: { jobId: string }) => {
       name: profileInfo.candidateInfo.name,
       email: profileInfo.email,
       candidateUserId: profileInfo._id,
-      status: [applicationStatus.APPLIED],
+      status: applicationStatus.APPLIED,
       jobId: _id.toString(),
     };
 
