@@ -152,6 +152,17 @@ export type ApplicantColumnType = {
   email: string;
   candidateUserId: CandidateType[];
 };
+export type ActivitiesColumnType = {
+  id: string;
+  title: string;
+  status: ApplicantStatusType;
+  company: string;
+  location: string;
+  applicants: number;
+  recruiter: string;
+  postedDate: string;
+  candidateUserId: CandidateType[];
+};
 
 export type ApplicantTableActionsProps = {
   candidateInfo: CandidateInfoType;

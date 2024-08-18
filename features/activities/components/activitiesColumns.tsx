@@ -3,10 +3,9 @@ import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ApplicantColumnType } from "@/types";
-import ApplicantTableActions from "@/features/jobs/components/applicants/ApplicantTableActions";
+import { ActivitiesColumnType } from "@/types";
 
-export const applicantColumns: ColumnDef<ApplicantColumnType>[] = [
+export const activitiesColumns: ColumnDef<ActivitiesColumnType>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -30,28 +29,28 @@ export const applicantColumns: ColumnDef<ApplicantColumnType>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "email",
+    accessorKey: "company",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Company
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -72,13 +71,58 @@ export const applicantColumns: ColumnDef<ApplicantColumnType>[] = [
     },
   },
   {
-    id: "actions",
-    cell: ({ row }) => {
+    accessorKey: "location",
+    header: ({ column }) => {
       return (
-        <ApplicantTableActions
-          candidateInfo={row.original.candidateUserId[0].candidateInfo}
-          id={row.original.id}
-        />
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Location
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "applicants",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Applicants
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "recruiter",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Recruiter
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "postedDate",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Posted Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
       );
     },
   },

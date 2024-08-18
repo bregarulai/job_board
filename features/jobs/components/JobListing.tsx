@@ -9,7 +9,7 @@ import RecruiterJobCard from "@/features/jobs/components/RecruiderJobCard";
 import { RecruiterJobType } from "@/types";
 import { useGetJobsForCandidate } from "@/features/jobs/api/useGetJobsForCandidate";
 import CandidateJobCard from "@/features/jobs/components/CandidateJobCard";
-import { useGetApplicationsForCandidate } from "@/features/jobs/api/useGetApplicationsForCandidate";
+import { useGetApplicationsForCandidate } from "@/features/activities/api/useGetApplicationsForCandidate";
 import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
 
 const JobListing = ({

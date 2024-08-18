@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchJobApplicationsForCandidateAction } from "@/features/jobs/actions/job.action";
 import { queryKeys } from "@/constants";
+import { fetchJobApplicationsForCandidateAction } from "@/features/activities/actions/activities.action";
 
 export const useGetApplicationsForCandidate = (
   candidateId: string | undefined

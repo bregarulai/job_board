@@ -11,7 +11,7 @@ import { useGetProfile } from "@/features/onboard/api/useGetProfile";
 import { applicationStatus, profileType } from "@/constants";
 import { JobApplicationType } from "@/types";
 import { useApplyForNewJob } from "@/features/jobs/api/useApplyForNewJob";
-import { useGetApplicationsForCandidate } from "../api/useGetApplicationsForCandidate";
+import { useGetApplicationsForCandidate } from "../../activities/api/useGetApplicationsForCandidate";
 import { useGetApplicationsForRecruiter } from "../api/useGetApplicationsForRecruiter";
 
 const JobDetails = ({ jobId }: { jobId: string }) => {

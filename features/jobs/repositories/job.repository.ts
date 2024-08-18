@@ -81,20 +81,6 @@ export const addJobApplication = async (application: JobApplicationType) => {
   }
 };
 
-export const getJobApplicationsForCandidate = async (
-  candidateId: string | undefined
-) => {
-  try {
-    await connectToDatabase();
-    const results = await Application.find({
-      candidateUserId: candidateId,
-    });
-    return results;
-  } catch (error) {
-    console.error(`Error getting job applications for candidate: ${error}`);
-  }
-};
-
 export const getJobApplicationsForRecruiter = async (
   jobId: string | undefined
 ) => {
