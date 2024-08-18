@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
+import { useState } from "react";
 
 import { filterMenuOptions, profileType } from "@/constants";
 import PostNewJob from "@/features/jobs/components/PostNewJob";
@@ -11,7 +12,17 @@ import { useGetJobsForCandidate } from "@/features/jobs/api/useGetJobsForCandida
 import CandidateJobCard from "@/features/jobs/components/CandidateJobCard";
 import { useGetApplicationsForCandidate } from "@/features/activities/api/useGetApplicationsForCandidate";
 import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
-import { useGetFilterCategories } from "../api/useGetFilterCategories";
+import { useGetFilterCategories } from "@/features/jobs/api/useGetFilterCategories";
+
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 const JobListing = ({
   role,
@@ -22,11 +33,14 @@ const JobListing = ({
   recruiterId: string | undefined;
   userId: string | undefined;
 }) => {
+  const [filterParams, setFilterParams] = useState<any>({});
+
   const jobResults =
     role === profileType.CANDIDATE
       ? useGetJobsForCandidate()
       : useGetJobsForRecruiter(recruiterId);
 
+  // TODO: Check if this is needed
   const applicationResults =
     role === profileType.CANDIDATE
       ? useGetApplicationsForCandidate(userId)
@@ -37,7 +51,9 @@ const JobListing = ({
 
   const { data: jobListing, isLoading: isLoadingJobs } = jobResults;
 
-  if (isLoadingJobs || isLoadingApplications) {
+  const { data: filterCategories, isLoading: isLoadingFilterCategories } =
+    useGetFilterCategories();
+  if (isLoadingJobs || isLoadingFilterCategories) {
     return (
       <div className="flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-slate-500 mt-32" />
@@ -45,9 +61,7 @@ const JobListing = ({
     );
   }
 
-  const { data: filterCategories } = useGetFilterCategories();
-
-  const filterMenus = filterMenuOptions.map((option) => ({
+  const filterMenus = filterMenuOptions?.map((option) => ({
     id: option.id,
     name: option.label,
     options: [
@@ -56,7 +70,28 @@ const JobListing = ({
     ],
   }));
 
-  console.log("filterMenus", filterMenus);
+  const handleFilter = (id: string, option: string) => {
+    let copyFilterParams = { ...filterParams };
+
+    const indexOfCurrentSection = Object.keys(copyFilterParams).indexOf(id);
+    if (indexOfCurrentSection === -1) {
+      copyFilterParams = {
+        ...copyFilterParams,
+        [id]: [option],
+      };
+    } else {
+      const indexOfCurrentOption = copyFilterParams[id].indexOf(option);
+      if (indexOfCurrentOption === -1) {
+        copyFilterParams[id].push(option);
+      } else {
+        copyFilterParams[id].splice(indexOfCurrentOption, 1);
+      }
+    }
+    setFilterParams(copyFilterParams);
+    sessionStorage.setItem("filterParams", JSON.stringify(copyFilterParams));
+    console.log("copyFilterParams", copyFilterParams);
+  };
+  console.log("FilterParams: ", filterParams);
 
   return (
     <div>
@@ -68,7 +103,43 @@ const JobListing = ({
               : "Jobs Dashboard"}
           </h1>
           <div className="flex items-center">
-            {role === profileType.CANDIDATE ? <p>Filters</p> : <PostNewJob />}
+            {role === profileType.CANDIDATE ? (
+              <Menubar>
+                {filterMenus.map((menu) => (
+                  <MenubarMenu key={menu.id}>
+                    <MenubarTrigger className="cursor-pointer">
+                      {menu.name}
+                    </MenubarTrigger>
+                    <MenubarContent>
+                      {menu.options.map((option: any, optionIndex) => (
+                        <MenubarItem
+                          key={optionIndex}
+                          className="flex items-center gap-2"
+                          onClick={() => handleFilter(menu.id, option)}
+                        >
+                          <div
+                            className={cn(
+                              "size-4 border rounded border-gray-400 text-indigo-600",
+                              filterParams &&
+                                Object.keys(filterParams).length > 0 &&
+                                filterParams[menu.id] &&
+                                filterParams[menu.id].indexOf(option) > -1
+                                ? "bg-indigo-800/40 text-muted-foreground"
+                                : ""
+                            )}
+                          />
+                          <Label className="text-sm cursor-pointer text-gray-600">
+                            {option}
+                          </Label>
+                        </MenubarItem>
+                      ))}
+                    </MenubarContent>
+                  </MenubarMenu>
+                ))}
+              </Menubar>
+            ) : (
+              <PostNewJob />
+            )}
           </div>
         </div>
         <div className="pt-6 pb-24">

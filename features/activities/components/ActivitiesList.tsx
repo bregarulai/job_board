@@ -41,8 +41,6 @@ const ActivitiesList = ({
     return data;
   });
 
-  console.log("applicationTableData", applications);
-
   return (
     <div>
       <ActivitiesDataTable

@@ -173,3 +173,9 @@ export type UpdateJobApplicationParams = {
   applicationId: string;
   application: JobApplicationType;
 };
+
+export type FilterMenuType = {
+  id: string;
+  name: string;
+  options: string[];
+};
