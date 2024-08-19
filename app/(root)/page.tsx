@@ -40,21 +40,29 @@ const HomePage = async () => {
                 </p>
                 <div className="flex space-x-4">
                   <Button asChild>
-                    <Link href="/jobs">Browse jobs</Link>
-                  </Button>
-                  <Button asChild variant="outline">
-                    <Link
-                      href={
-                        profileInfo?.role === profileType.CANDIDATE
-                          ? "/activities"
-                          : "/jobs"
-                      }
-                    >
-                      {profileInfo?.role === profileType.CANDIDATE
-                        ? "Activies"
-                        : "Post New Job"}
+                    <Link href="/jobs">
+                      {profileInfo
+                        ? profileInfo?.role === profileType.CANDIDATE
+                          ? "Browse Jobs"
+                          : "Jobs Dashboard"
+                        : "Find Jobs"}
                     </Link>
                   </Button>
+                  {!!profileInfo && (
+                    <Button asChild variant="outline">
+                      <Link
+                        href={
+                          profileInfo?.role === profileType.CANDIDATE
+                            ? "/activities"
+                            : "/jobs"
+                        }
+                      >
+                        {profileInfo?.role === profileType.CANDIDATE
+                          ? "Activies"
+                          : "Post New Job"}
+                      </Link>
+                    </Button>
+                  )}
                 </div>
               </div>
               <div className="hidden relative md:block lg:w-7/12">

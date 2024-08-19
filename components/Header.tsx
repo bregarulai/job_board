@@ -90,7 +90,7 @@ const Header = ({ userId, role }: HeaderProps) => {
           </nav>
         </SheetContent>
       </Sheet>
-      <Link href="/" className="mr-6 hidden lg:flex">
+      <Link href="/" className="mr-6 hidden lg:flex font-bold text-xl">
         <h3>BreagaCode Jobs</h3>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
