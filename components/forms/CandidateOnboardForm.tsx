@@ -13,10 +13,13 @@ import { formFieldType, profileType } from "@/constants";
 import { useUser } from "@clerk/nextjs";
 import { useCreateProfile } from "@/features/onboard/api/useCreateProfile";
 import supabase from "@/lib/supabase/client";
+import { CandidateOnboardFormProps } from "@/types";
+import { useUpdateProfile } from "@/features/account/api/useUpdateProfile";
 
-const CandidateOnboardForm = () => {
+const CandidateOnboardForm = ({ userProfile }: CandidateOnboardFormProps) => {
   const { isLoaded, user } = useUser();
   const createProfileMutation = useCreateProfile();
+  const updateProfileMutation = useUpdateProfile();
 
   const [file, setFile] = useState<File | null>(null);
 
@@ -24,20 +27,40 @@ const CandidateOnboardForm = () => {
     resolver: zodResolver(candidateOnboardFormSchema),
     defaultValues: {
       resume: "",
-      name: "",
-      currentCompany: "",
-      currentJobLoacation: "",
-      preferredJobLoacation: "",
-      currentSalary: "",
-      noticePeriod: "",
-      skills: "",
-      previousCompanies: "",
-      totalExperience: "",
-      college: "",
-      collegeLocation: "",
-      graduationYear: "",
-      linkedinProfile: "",
-      githubProfile: "",
+      name: userProfile ? userProfile.candidateInfo?.name : "",
+      currentCompany: userProfile
+        ? userProfile.candidateInfo?.currentCompany
+        : "",
+      currentJobLoacation: userProfile
+        ? userProfile.candidateInfo?.currentJobLoacation
+        : "",
+      preferredJobLoacation: userProfile
+        ? userProfile.candidateInfo?.preferredJobLoacation
+        : "",
+      currentSalary: userProfile
+        ? userProfile.candidateInfo?.currentSalary
+        : "",
+      noticePeriod: userProfile ? userProfile.candidateInfo?.noticePeriod : "",
+      skills: userProfile ? userProfile.candidateInfo?.skills : "",
+      previousCompanies: userProfile
+        ? userProfile.candidateInfo?.previousCompanies
+        : "",
+      totalExperience: userProfile
+        ? userProfile.candidateInfo?.totalExperience
+        : 0,
+      college: userProfile ? userProfile.candidateInfo?.college : "",
+      collegeLocation: userProfile
+        ? userProfile.candidateInfo?.collegeLocation
+        : "",
+      graduationYear: userProfile
+        ? userProfile.candidateInfo?.graduationYear
+        : "",
+      linkedinProfile: userProfile
+        ? userProfile.candidateInfo?.linkedinProfile
+        : "",
+      githubProfile: userProfile
+        ? userProfile.candidateInfo?.githubProfile
+        : "",
     },
   });
 
@@ -67,33 +90,52 @@ const CandidateOnboardForm = () => {
   };
 
   async function onSubmit(values: z.infer<typeof candidateOnboardFormSchema>) {
-    const filePath = await handleUploadPdfToSupabase(file!);
-    const candidateInfo = {
-      ...values,
-      resume: filePath,
-    };
+    if (!!userProfile) {
+      const candidateInfo = {
+        ...values,
+        resume: userProfile.candidateInfo?.resume,
+      };
 
-    const data = {
-      userId: user?.id,
-      role: profileType.CANDIDATE,
-      email: user?.emailAddresses[0].emailAddress,
-      isPremiumUser: false,
-      candidateInfo: candidateInfo,
-    };
+      const profileData = {
+        _id: userProfile._id,
+        userId: user?.id,
+        role: profileType.CANDIDATE,
+        email: user?.emailAddresses[0].emailAddress,
+        isPremiumUser: false,
+        candidateInfo: candidateInfo,
+      };
+      updateProfileMutation.mutate(profileData);
+    } else {
+      const filePath = await handleUploadPdfToSupabase(file!);
+      const candidateInfo = {
+        ...values,
+        resume: filePath,
+      };
 
-    createProfileMutation.mutate(data);
-    form.reset();
+      const data = {
+        userId: user?.id,
+        role: profileType.CANDIDATE,
+        email: user?.emailAddresses[0].emailAddress,
+        isPremiumUser: false,
+        candidateInfo: candidateInfo,
+      };
+
+      createProfileMutation.mutate(data);
+      form.reset();
+    }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pr-3">
-        <CustomFormField
-          control={form.control}
-          name="resume"
-          fieldType={formFieldType.FILE}
-          handleFileChange={handleFileChange}
-        />
+        {!userProfile && (
+          <CustomFormField
+            control={form.control}
+            name="resume"
+            fieldType={formFieldType.FILE}
+            handleFileChange={handleFileChange}
+          />
+        )}
         <CustomFormField
           control={form.control}
           name="name"
@@ -214,6 +256,8 @@ const CandidateOnboardForm = () => {
         >
           {form.formState.isSubmitting
             ? "Onboarding..."
+            : userProfile
+            ? "Update Profile"
             : "Onboard as a Cadidate"}
         </Button>
       </form>

@@ -1,4 +1,5 @@
 import { Database } from "@/database.types";
+import { User } from "@clerk/nextjs/server";
 import { Control } from "react-hook-form";
 
 export type HeaderProps = {
@@ -34,7 +35,7 @@ export type RecruiterSubmitData = {
     jobsPosted: string[];
   };
   candidateInfo?: {
-    resume: string | undefined;
+    resume?: string | undefined;
     name: string;
     currentCompany: string;
     currentJobLoacation: string;
@@ -43,7 +44,7 @@ export type RecruiterSubmitData = {
     noticePeriod: string;
     skills: string;
     previousCompanies: string;
-    totalExperience: string;
+    totalExperience: number;
     college: string;
     collegeLocation: string;
     graduationYear: string;
@@ -186,4 +187,39 @@ export type SearchParamsType = {
 
 export type SearchParamsPropType = {
   searchParamsProp: { [key: string]: string | string[] | undefined | {} };
+};
+
+export type UserProfileType = {
+  _id: string;
+  userId: string | undefined;
+  role: RecruiterType;
+  email: string | undefined;
+  isPremiumUser: boolean;
+  recruiterInfo?: {
+    name: string;
+    companyName: string;
+    companyRole: string;
+    jobsPosted: string[];
+  };
+  candidateInfo?: {
+    resume?: string | undefined;
+    name: string;
+    currentCompany: string;
+    currentJobLoacation: string;
+    preferredJobLoacation: string;
+    currentSalary: string;
+    noticePeriod: string;
+    skills: string;
+    previousCompanies: string;
+    totalExperience: number;
+    college: string;
+    collegeLocation: string;
+    graduationYear: string;
+    linkedinProfile: string;
+    githubProfile: string;
+  };
+};
+
+export type CandidateOnboardFormProps = {
+  userProfile?: UserProfileType;
 };

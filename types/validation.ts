@@ -13,10 +13,12 @@ export const recruiterOnboardFormSchema = z.object({
 });
 
 export const candidateOnboardFormSchema = z.object({
-  resume: z
-    .string()
-    .trim()
-    .endsWith(".pdf", { message: "Resume must be pdf file." }),
+  resume: z.optional(z.string().trim()),
+  // resume: z
+  //   .string()
+  //   .trim()
+  //   .endsWith(".pdf", { message: "Resume must be pdf file." })
+  //   .optional(),
   name: z.string().trim().min(2, {
     message: "Name must be at least 2 characters.",
   }),
@@ -41,9 +43,9 @@ export const candidateOnboardFormSchema = z.object({
   previousCompanies: z.string().trim().min(2, {
     message: "Previous Companies must be at least 2 characters.",
   }),
-  totalExperience: z.string().trim().min(2, {
-    message: "Total Experience must be at least 2 characters.",
-  }),
+  totalExperience: z
+    .number()
+    .min(1, { message: "Total Experience must be at least 1 characters." }),
   college: z.string().trim().min(2, {
     message: "college must be at least 2 characters.",
   }),
