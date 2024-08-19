@@ -181,5 +181,9 @@ export type FilterMenuType = {
 };
 
 export type SearchParamsType = {
-  searchParams: { [key: string]: string | string[] | undefined } | {};
+  searchParams: { [key: string]: string | string[] | undefined | {} };
+};
+
+export type SearchParamsPropType = {
+  searchParamsProp: { [key: string]: string | string[] | undefined | {} };
 };

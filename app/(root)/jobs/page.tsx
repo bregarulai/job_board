@@ -6,7 +6,6 @@ import JobListing from "@/features/jobs/components/JobListing";
 import { SearchParamsType } from "@/types";
 
 const JobsPage = async ({ searchParams }: SearchParamsType) => {
-  console.log("searchParams: ", searchParams);
   const user = await currentUser();
 
   let profileInfo;

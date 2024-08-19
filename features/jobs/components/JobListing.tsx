@@ -8,7 +8,11 @@ import { filterMenuOptions, profileType } from "@/constants";
 import PostNewJob from "@/features/jobs/components/PostNewJob";
 import { useGetJobsForRecruiter } from "@/features/jobs/api/useGetJobsForRecruiter";
 import RecruiterJobCard from "@/features/jobs/components/RecruiderJobCard";
-import { RecruiterJobType, SearchParamsType } from "@/types";
+import {
+  RecruiterJobType,
+  SearchParamsPropType,
+  SearchParamsType,
+} from "@/types";
 import { useGetJobsForCandidate } from "@/features/jobs/api/useGetJobsForCandidate";
 import CandidateJobCard from "@/features/jobs/components/CandidateJobCard";
 import { useGetFilterCategories } from "@/features/jobs/api/useGetFilterCategories";
@@ -31,7 +35,7 @@ const JobListing = ({
   role: profileType;
   recruiterId: string | undefined;
   userId: string | undefined;
-  searchParamsProp: SearchParamsType;
+  searchParamsProp: SearchParamsPropType | {};
 }) => {
   const [filterParams, setFilterParams] = useState<any>({});
   const searchParams = useSearchParams();
