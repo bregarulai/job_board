@@ -18,8 +18,6 @@ const HomePage = async () => {
 
   if (user && !profileInfo?._id) redirect("/onboard");
 
-  console.log("Profile Info: ", profileInfo);
-
   return (
     <section>
       <div className="relative w-full">
