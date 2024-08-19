@@ -5,7 +5,6 @@ import Profile from "@/models/profile";
 import { UserProfileType } from "@/types";
 
 export const updateCandidateProfile = async (userProfile: UserProfileType) => {
-  console.log("User Profile", userProfile);
   try {
     await connectToDatabase();
     const updatedProfile = await Profile.findByIdAndUpdate(
