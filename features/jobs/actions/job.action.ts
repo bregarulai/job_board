@@ -16,6 +16,7 @@ import {
 import {
   JobApplicationType,
   PostNewJobParams,
+  SearchParamsType,
   UpdateJobApplicationParams,
 } from "@/types";
 
@@ -40,9 +41,11 @@ export const fetchJobsForRecruiterAction = async (
   }
 };
 
-export const fetchJobsForCandidateAction = async () => {
+export const fetchJobsForCandidateAction = async ({
+  searchParams,
+}: SearchParamsType) => {
   try {
-    const jobs = await getJobsForCandidate();
+    const jobs = await getJobsForCandidate({ searchParams });
     return parseStringify(jobs);
   } catch (error) {
     console.error(`Error while fetching jobs for candidate: ${error}`);

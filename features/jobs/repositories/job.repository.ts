@@ -7,8 +7,12 @@ import Profile from "@/models/profile";
 import {
   JobApplicationType,
   JobSubmitData,
+  SearchParamsType,
   UpdateJobApplicationParams,
 } from "@/types";
+
+// Define the type for updatedParams
+type QueryParams = { [key: string]: { $in: string[] } };
 
 export const addJob = async (job: JobSubmitData) => {
   try {
@@ -42,10 +46,31 @@ export const getJobsForRecruiter = async (recruiterId: string | undefined) => {
   }
 };
 
-export const getJobsForCandidate = async () => {
+export const getJobsForCandidate = async ({
+  searchParams,
+}: SearchParamsType) => {
   try {
     await connectToDatabase();
-    const results = await Job.find();
+
+    // Initialize updatedParams with the correct type
+    let updatedParams: QueryParams = {};
+
+    // Iterate over keys in searchParams
+    Object.keys(searchParams).forEach((filterKey) => {
+      const paramValue: string | undefined = searchParams[
+        filterKey as keyof typeof searchParams
+      ] as string; // Type assertion to get the correct type
+
+      // Type guard to ensure paramValue is a string before using split
+      if (typeof paramValue === "string" && paramValue) {
+        updatedParams[filterKey] = { $in: paramValue.split(",") };
+      }
+    });
+
+    const results = await Job.find(
+      searchParams && Object.keys(searchParams).length > 0 ? updatedParams : {}
+    );
+
     return results;
   } catch (error) {
     console.error(`Error getting jobs for candidate: ${error}`);

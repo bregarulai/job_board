@@ -8,11 +8,9 @@ import { filterMenuOptions, profileType } from "@/constants";
 import PostNewJob from "@/features/jobs/components/PostNewJob";
 import { useGetJobsForRecruiter } from "@/features/jobs/api/useGetJobsForRecruiter";
 import RecruiterJobCard from "@/features/jobs/components/RecruiderJobCard";
-import { RecruiterJobType } from "@/types";
+import { RecruiterJobType, SearchParamsType } from "@/types";
 import { useGetJobsForCandidate } from "@/features/jobs/api/useGetJobsForCandidate";
 import CandidateJobCard from "@/features/jobs/components/CandidateJobCard";
-import { useGetApplicationsForCandidate } from "@/features/activities/api/useGetApplicationsForCandidate";
-import { useGetApplicationsForRecruiter } from "@/features/jobs/api/useGetApplicationsForRecruiter";
 import { useGetFilterCategories } from "@/features/jobs/api/useGetFilterCategories";
 import {
   Menubar,
@@ -28,25 +26,16 @@ const JobListing = ({
   role,
   recruiterId,
   userId,
+  searchParamsProp,
 }: {
   role: profileType;
   recruiterId: string | undefined;
   userId: string | undefined;
+  searchParamsProp: SearchParamsType;
 }) => {
   const [filterParams, setFilterParams] = useState<any>({});
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  const jobResults =
-    role === profileType.CANDIDATE
-      ? useGetJobsForCandidate()
-      : useGetJobsForRecruiter(recruiterId);
-
-  // TODO: Check if this is needed
-  const applicationResults =
-    role === profileType.CANDIDATE
-      ? useGetApplicationsForCandidate(userId)
-      : useGetApplicationsForRecruiter(recruiterId);
 
   useEffect(() => {
     setFilterParams(JSON.parse(sessionStorage.getItem("filterParams") || "{}"));
@@ -63,8 +52,10 @@ const JobListing = ({
     }
   }, [filterParams, searchParams]);
 
-  const { data: ApplicationListing, isLoading: isLoadingApplications } =
-    applicationResults;
+  const jobResults =
+    role === profileType.CANDIDATE
+      ? useGetJobsForCandidate({ searchParams: searchParamsProp })
+      : useGetJobsForRecruiter(recruiterId);
 
   const { data: jobListing, isLoading: isLoadingJobs } = jobResults;
 
@@ -72,7 +63,7 @@ const JobListing = ({
     useGetFilterCategories();
   if (isLoadingJobs || isLoadingFilterCategories) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-28">
         <Loader2 className="h-8 w-8 animate-spin text-slate-500 mt-32" />
       </div>
     );

@@ -3,8 +3,10 @@ import { redirect } from "next/navigation";
 
 import { fetchProfileAction } from "@/features/onboard/actions/profile.action";
 import JobListing from "@/features/jobs/components/JobListing";
+import { SearchParamsType } from "@/types";
 
-const JobsPage = async () => {
+const JobsPage = async ({ searchParams }: SearchParamsType) => {
+  console.log("searchParams: ", searchParams);
   const user = await currentUser();
 
   let profileInfo;
@@ -20,6 +22,7 @@ const JobsPage = async () => {
         role={profileInfo?.role}
         recruiterId={profileInfo?._id}
         userId={profileInfo?._id}
+        searchParamsProp={searchParams}
       />
     </div>
   );

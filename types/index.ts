@@ -179,3 +179,7 @@ export type FilterMenuType = {
   name: string;
   options: string[];
 };
+
+export type SearchParamsType = {
+  searchParams: { [key: string]: string | string[] | undefined } | {};
+};
