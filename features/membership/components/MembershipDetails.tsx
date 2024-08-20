@@ -65,21 +65,6 @@ const MembershipDetails = ({ userId }: { userId: string | undefined }) => {
                 </div>
               </CardFooter>
             </Card>
-
-            // <CommonCard
-            //   key={plan.type}
-            //   icon={
-            //     <div className="flex justify-between">
-            //       <div>
-            //         <JobIcon />
-            //       </div>
-            //       <h2 className="text-2xl font-bold">{plan.heading}</h2>
-            //     </div>
-            //   }
-            //   title={`$${plan.price} /yr`}
-            //   description={plan.type}
-            //   footerContent={<Button>Select Plan</Button>}
-            // />
           ))}
         </div>
       </div>
