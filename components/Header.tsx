@@ -3,7 +3,12 @@
 import { AlignJustify, Loader2 } from "lucide-react";
 import Link from "next/link";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
   ClerkLoaded,
@@ -13,6 +18,10 @@ import {
 } from "@clerk/nextjs";
 import { HeaderProps } from "@/types";
 import { profileType } from "@/constants";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import path from "path";
 
 const Header = ({ userId, role }: HeaderProps) => {
   const menuItems = [
@@ -53,9 +62,12 @@ const Header = ({ userId, role }: HeaderProps) => {
     },
   ];
 
+  const pathName = usePathname();
+  const [active, setActive] = useState(false);
+
   return (
     <header className="flex h-16 w-full shrink-0 items-center px-6 lg:px-8">
-      <Sheet>
+      <Sheet aria-describedby={undefined}>
         <SheetTrigger asChild>
           <Button
             size="sm"
@@ -66,9 +78,9 @@ const Header = ({ userId, role }: HeaderProps) => {
             <span className="sr-only">Toggle Navigation Menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left">
+        <SheetContent side="left" aria-describedby={undefined}>
           <Link href="/" className="mr-6 flex">
-            <h3>BreagaCode Jobs</h3>
+            <SheetTitle className="text-primary">BreagaCode Jobs</SheetTitle>
           </Link>
           <nav className="grid gap-2 py-6">
             {/* TODO: close drawer after clicking on a menu item */}
@@ -78,7 +90,10 @@ const Header = ({ userId, role }: HeaderProps) => {
                   key={menuItem.path}
                   href={menuItem.path}
                   onClick={() => sessionStorage.removeItem("filterParams")}
-                  className="flex w-full items-center py-2 text-md font-semibold hover:underline"
+                  className={cn(
+                    "flex w-full items-center py-2 text-md font-semibold hover:underline",
+                    pathName === menuItem.path && "text-primary underline"
+                  )}
                 >
                   {menuItem.label}
                 </Link>
@@ -91,7 +106,7 @@ const Header = ({ userId, role }: HeaderProps) => {
         </SheetContent>
       </Sheet>
       <Link href="/" className="mr-6 hidden lg:flex font-bold text-xl">
-        <h3>BreagaCode Jobs</h3>
+        <h3 className="text-primary">BreagaCode Jobs</h3>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
         {menuItems.map((menuItem) =>
@@ -100,7 +115,10 @@ const Header = ({ userId, role }: HeaderProps) => {
               key={menuItem.path}
               href={menuItem.path}
               onClick={() => sessionStorage.removeItem("filterParams")}
-              className="group inline-flex h-9 w-max items-center rounded-md bg-white px-4 py-2 text-sm font-medium hover:underline"
+              className={cn(
+                "group inline-flex h-9 w-max items-center rounded-md bg-white px-4 py-2 text-sm font-medium hover:underline",
+                pathName === menuItem.path && "text-primary underline"
+              )}
             >
               {menuItem.label}
             </Link>
