@@ -1,3 +1,5 @@
+import { features } from "process";
+
 export enum formFieldType {
   INPUT = "input",
   FILE = "file",
@@ -36,18 +38,54 @@ export const filterMenuOptions = [
 
 export const membershipPlans = [
   {
-    heading: "Tier 1",
-    price: 100,
+    heading: "Basic",
+    price: "Free",
     type: "basic",
+    description: "Basic membership plan",
+    featuresTitle: "Basic user",
+    features: [
+      "onboarding",
+      "recruiter",
+      "candidate",
+      "job",
+      "application",
+      "profile",
+      "dashboard",
+      "5 limit",
+    ],
   },
   {
-    heading: "Tier 2",
-    price: 1000,
-    type: "teams",
+    heading: "Team",
+    price: "$1000/yr",
+    type: "team",
+    description: "Team membership plan +",
+    featuresTitle: "Team members",
+    features: [
+      "onboarding",
+      "recruiter",
+      "candidate",
+      "job",
+      "application",
+      "profile",
+      "dashboard",
+      "10 limit",
+    ],
   },
   {
-    heading: "Tier 3",
-    price: 5000,
+    heading: "Enterprise +",
+    price: "$5000/yr",
     type: "enterprise",
+    description: "Enterprise membership plan",
+    featuresTitle: "Enterprise members",
+    features: [
+      "onboarding",
+      "recruiter",
+      "candidate",
+      "job",
+      "application",
+      "profile",
+      "dashboard",
+      "Unlimited",
+    ],
   },
 ];
