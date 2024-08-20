@@ -36,7 +36,7 @@ const MembershipDetails = ({ userId }: { userId: string | undefined }) => {
       <div className="container mx-auto p-0 space-x-8">
         <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
           {membershipPlans.map((plan) => (
-            <Card>
+            <Card key={plan.heading}>
               <CardHeader>
                 <CardTitle className="text-center">{plan.heading}</CardTitle>
                 <CardDescription className="text-center">

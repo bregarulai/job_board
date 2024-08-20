@@ -9,8 +9,10 @@ const CandidateJobCard = ({ job }: CandidateJobCardProps) => {
     <>
       <CommonCard
         title={job.title}
-        description={job.companyName}
-        icon={<JobIcon />}
+        companyName={job.companyName}
+        location={job.location}
+        type={job.type}
+        description={job.description}
         footerContent={
           <Button asChild>
             <Link href={`/jobs/${job._id}`}>View Details</Link>

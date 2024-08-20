@@ -10,7 +10,9 @@ const RecruiterJobCard = ({ job }: RecruiterJobCardProps) => {
     <div>
       <CommonCard
         title={job.title}
-        icon={<JobIcon />}
+        companyName={job.companyName}
+        location={job.location}
+        type={job.type}
         description={job.description}
         footerContent={
           <div>
