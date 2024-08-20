@@ -60,6 +60,7 @@ const MembershipDetails = ({ userId }: { userId: string | undefined }) => {
                         <span>{feature}</span>
                       </li>
                     ))}
+                    <Button className="mt-4">Select Plan</Button>
                   </ul>
                 </div>
               </CardFooter>
