@@ -33,3 +33,21 @@ export const filterMenuOptions = [
   { id: "location", label: "Location" },
   { id: "type", label: "Type" },
 ];
+
+export const membershipPlans = [
+  {
+    heading: "Tier 1",
+    price: 100,
+    type: "basic",
+  },
+  {
+    heading: "Tier 2",
+    price: 1000,
+    type: "teams",
+  },
+  {
+    heading: "Tier 3",
+    price: 5000,
+    type: "enterprise",
+  },
+];
